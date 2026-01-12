@@ -1,0 +1,125 @@
+## Recuperando comandos ##
+
+1) O que é o histórico de comandos
+----------------------------------
+- O histórico (history) registra os comandos digitados
+  pelo usuário no shell.
+- Serve para:
+  • reutilizar comandos antigos
+  • evitar digitação repetitiva
+  • auditoria e aprendizado
+- Cada shell mantém seu próprio histórico.
+
+
+2) Onde o histórico é armazenado
+--------------------------------
+Depende do shell:
+
+bash → ~/.bash_history
+zsh  → ~/.zsh_history
+fish → ~/.local/share/fish/fish_history
+
+Obs:
+- O histórico é salvo ao FINAL da sessão
+- Se o terminal fechar à força, pode perder comandos
+
+
+3) Comando history
+------------------
+Mostra a lista de comandos usados.
+
+Exemplo:
+history
+
+Com números:
+  1  ls
+  2  cd /home
+  3  nano teste.txt
+
+
+4) Executar comandos do histórico
+---------------------------------
+
+!!     → executa o último comando
+!n     → executa o comando número n
+!-n    → executa o comando de n posições atrás
+
+Exemplos:
+!!      → repete o último comando
+!15     → executa o comando 15
+!-2     → executa o penúltimo comando
+
+
+5) Pesquisa no histórico
+------------------------
+- Ctrl + R → busca reversa interativa
+- Digite parte do comando e pressione Enter
+
+Exemplo:
+Ctrl + R
+(reverse-i-search)`apt': sudo apt update
+
+
+6) Limpar histórico
+-------------------
+Apaga o histórico da sessão atual:
+
+history -c
+
+Apaga o arquivo de histórico:
+rm ~/.bash_history
+
+Obs:
+- O shell pode reescrever o histórico ao sair
+
+
+7) Tamanho do histórico
+-----------------------
+Controlado por variáveis:
+
+HISTSIZE      → comandos na memória
+HISTFILESIZE  → comandos no arquivo
+
+Exemplo:
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+
+
+8) Evitar comandos no histórico
+--------------------------------
+- Comando iniciado com espaço não é salvo
+  (se HISTCONTROL=ignoreboth)
+
+Exemplo:
+ export HISTCONTROL=ignoreboth
+  senha=123456   ← não entra no histórico
+
+
+9) Variáveis importantes do histórico
+-------------------------------------
+
+HISTCONTROL:
+- ignorespace → ignora comandos com espaço
+- ignoredups  → ignora comandos repetidos
+
+HISTIGNORE:
+- ignora padrões
+
+Exemplo:
+export HISTIGNORE="ls:pwd:exit"
+
+
+10) Boas práticas de segurança
+------------------------------
+- Nunca digitar senhas diretamente
+- Limpar histórico em máquinas compartilhadas
+- Usar variáveis e arquivos de configuração
+- Cuidado com sudo + comandos sensíveis
+
+
+11) Resumo final
+----------------
+- O histórico melhora produtividade
+- Permite reutilizar e estudar comandos
+- Deve ser usado com atenção à segurança
+- history, !!, !n e Ctrl+R são essenciais
