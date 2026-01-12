@@ -1,0 +1,152 @@
+## Classificando dados com sort ##
+
+---------------------------------------------------------
+1) O que é o sort
+---------------------------------------------------------
+- sort é um comando usado para ORDENAR linhas de texto.
+- A ordenação acontece linha por linha.
+- Muito usado para organizar dados, logs, listas e
+  resultados de outros comandos.
+- Funciona muito bem com pipes (|).
+
+Uso básico:
+sort arquivo.txt
+
+
+---------------------------------------------------------
+2) Ordenação padrão
+---------------------------------------------------------
+- A ordenação padrão é ALFABÉTICA (ordem ASCII).
+
+Exemplo:
+sort nomes.txt
+
+Entrada:
+Carlos
+Ana
+Bruno
+
+Saída:
+Ana
+Bruno
+Carlos
+
+
+---------------------------------------------------------
+3) Ordenação numérica (-n)
+---------------------------------------------------------
+- Por padrão, números são tratados como texto.
+- -n faz ordenação NUMÉRICA.
+
+Exemplo:
+sort -n numeros.txt
+
+Entrada:
+2
+10
+1
+
+Sem -n (errado):
+1
+10
+2
+
+Com -n (correto):
+1
+2
+10
+
+
+---------------------------------------------------------
+4) Ordem reversa (-r)
+---------------------------------------------------------
+- Inverte a ordem do resultado.
+
+Exemplo:
+sort -r nomes.txt
+
+
+---------------------------------------------------------
+5) Ignorar maiúsculas/minúsculas (-f)
+---------------------------------------------------------
+- Ignora diferença entre letras maiúsculas e minúsculas.
+
+Exemplo:
+sort -f nomes.txt
+
+
+---------------------------------------------------------
+6) Remover linhas duplicadas (-u)
+---------------------------------------------------------
+- -u mantém apenas linhas únicas.
+- Também ordena.
+
+Exemplo:
+sort -u lista.txt
+
+
+---------------------------------------------------------
+7) Ordenar por coluna (-k)
+---------------------------------------------------------
+- Usado quando os dados têm CAMPOS/colunas.
+
+Exemplo (dados separados por espaço):
+sort -k2 dados.txt
+(organiza pela segunda coluna)
+
+Com separador específico:
+sort -t';' -k3 dados.txt
+
+
+---------------------------------------------------------
+8) Ordenar números em coluna
+---------------------------------------------------------
+- Combine -k com -n.
+
+Exemplo:
+sort -t';' -k2 -n dados.txt
+
+
+---------------------------------------------------------
+9) Usando sort com pipe
+---------------------------------------------------------
+- sort normalmente recebe dados de outro comando.
+
+Exemplo:
+ps aux | sort -k3 -n
+
+Explicação:
+- ps aux → lista processos
+- -k3    → coluna de CPU
+- -n     → numérico
+
+
+---------------------------------------------------------
+10) Visualizar com less
+---------------------------------------------------------
+- Para arquivos grandes, use less.
+
+Exemplo:
+sort dados.txt | less
+
+
+---------------------------------------------------------
+11) Boas práticas
+---------------------------------------------------------
+- Use -n para números
+- Use -t para definir separador
+- Use -k para escolher coluna
+- Combine com grep e less
+
+
+---------------------------------------------------------
+12) Resumo final
+---------------------------------------------------------
+sort        → ordenar linhas
+-n          → numérico
+-r          → reverso
+-f          → ignora maiúsculas
+-u          → remove duplicados
+-k          → coluna
+-t          → separador
+
