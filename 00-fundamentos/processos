@@ -1,0 +1,251 @@
+=========================================================
+PROCESSOS NO LINUX — RESUMO GERAL
+=========================================================
+
+1) O que é um processo
+---------------------
+- Processo é um PROGRAMA EM EXECUÇÃO.
+- Quando um programa é iniciado, o sistema cria
+  um processo para ele.
+- Cada processo possui:
+  • PID  (identificador do processo)
+  • PPID (PID do processo pai)
+  • estado (rodando, dormindo, parado, etc.)
+  • uso de CPU e memória
+
+
+2) Processos no sistema
+----------------------
+- Podem ser iniciados pelo usuário (shell)
+  ou pelo sistema (daemons).
+- Podem rodar em:
+  • foreground (primeiro plano)
+  • background (segundo plano)
+
+
+3) Comando top
+--------------
+- top mostra os processos EM TEMPO REAL.
+- Atualiza a lista constantemente.
+- Muito usado para monitoramento.
+
+O que o top mostra:
+- PID
+- usuário
+- uso de CPU (%CPU)
+- uso de memória (%MEM)
+- tempo de execução
+- estado do processo
+
+Exemplo:
+top
+
+Encerrar o top:
+q
+
+==============================================================================
+EXPLICAÇÃO LINHA A LINHA DO COMANDO TOP
+==============================================================================
+
+LINHA 1 — STATUS GERAL DO SISTEMA:
+-------------------------------------------------------------------------------
+
+top - 14:48:18
+→ Horário atual do sistema
+
+up 7:20
+→ Tempo que o sistema está ligado (uptime)
+
+1 user
+→ Quantidade de usuários logados
+
+load average: 1.55, 1.52, 1.67
+→ Carga média do sistema:
+   - últimos 1 minuto
+   - últimos 5 minutos
+   - últimos 15 minutos
+(quanto maior que o número de CPUs, mais sobrecarga)
+
+===============================================================================
+LINHA 2 — PROCESSOS (TASKS):
+-------------------------------------------------------------------------------
+
+Tasks: 242 total
+→ Total de processos
+
+2 running
+→ Processos em execução no momento
+
+240 sleeping
+→ Processos aguardando (estado normal)
+
+0 stopped
+→ Processos parados (CTRL+Z)
+
+0 zombie
+→ Processos mortos não finalizados corretamente
+
+===============================================================================
+LINHA 3 — USO DA CPU:
+-------------------------------------------------------------------------------
+
+%Cpu(s):
+5.0 us
+→ Tempo gasto com processos do usuário
+
+0.0 sy
+→ Tempo gasto pelo kernel (sistema)
+
+90.5 id
+→ CPU ociosa (livre)
+
+0.1 wa
+→ Tempo esperando I/O (disco, rede)
+
+0.0 hi
+→ Interrupções de hardware
+
+0.0 si
+→ Interrupções de software
+
+0.0 st
+→ Tempo roubado por máquina virtual (steal time)
+
+===============================================================================
+LINHA 4 — MEMÓRIA RAM:
+-------------------------------------------------------------------------------
+
+MiB Mem : 7853.5 total
+→ Total de memória RAM
+
+1876.7 free
+→ RAM completamente livre
+
+3949.0 used
+→ RAM usada por processos
+
+2780.7 buff/cache
+→ RAM usada como cache/buffer (reutilizável)
+
+===============================================================================
+LINHA 5 — MEMÓRIA SWAP:
+-------------------------------------------------------------------------------
+
+MiB Swap: 8091.0 total
+→ Total de swap
+
+8090.5 free
+→ Swap livre
+
+0.5 used
+→ Swap em uso
+
+3904.5 avail Mem
+→ Memória efetivamente disponível para novos processos
+
+===============================================================================
+COLUNAS DOS PROCESSOS:
+===============================================================================
+
+PID
+→ Identificador do processo
+
+USER
+→ Usuário dono do processo
+
+PR
+→ Prioridade do processo
+
+NI
+→ Valor nice (prioridade ajustável)
+
+VIRT
+→ Memória virtual usada
+
+RES
+→ Memória RAM real usada
+
+SHR
+→ Memória compartilhada
+
+S
+→ Estado do processo (R, S, Z, T)
+
+%CPU
+→ Uso de CPU do processo
+
+%MEM
+→ Uso de memória RAM
+
+TIME+
+→ Tempo total de CPU usado
+
+COMMAND
+→ Nome do comando/processo
+
+
+4) Comando ps
+-------------
+- ps mostra um RETRATO do momento atual.
+- Não atualiza automaticamente.
+- Ideal para scripts e verificações pontuais.
+
+Exemplo:
+ps
+
+Listagem mais comum:
+ps aux
+
+Diferença principal:
+--------------------
+top → dinâmico (tempo real)
+ps  → estático (instantâneo)
+
+
+5) Comando kill
+---------------
+- kill envia um SINAL para um processo.
+- Normalmente usado para encerrar processos.
+
+Sintaxe básica:
+kill PID
+
+
+6) Sinais comuns do kill
+------------------------
+Sintaxe
+kill -SINAL PID
+--ou
+kill -NUMERO_DO_SINAL PID
+
+
+SIGTERM (15) → encerra de forma educada (padrão)
+SIGKILL (9)  → encerra à força
+SIGSTOP (19) → pausa o processo
+SIGCONT (18) → continua processo pausado
+
+
+Exemplos:
+kill 1234              # SIGTERM
+kill -9 1234           # SIGKILL
+kill -STOP 1234        # pausa
+kill -CONT 1234        # continua
+
+OBS: Pode-se isar o nome completo (-SIGTERM), omitir o SIG (-TERM) ou o codigo (-15); todos são válidos
+
+
+
+7) Quando usar cada um
+---------------------
+- SIGTERM → primeira tentativa
+- SIGKILL → quando o processo não responde
+- SIGSTOP → para pausar
+- SIGCONT → para retomar
+
+
+8) Resumo final
+---------------
+- Processos são programas em execução
+- top monitora processos em tempo real
+- ps mostra o estado atual dos processos
+- kill controla processos via sinais
