@@ -1,0 +1,229 @@
+##Criando contas de usuario - Aula 41##
+
+===============================================================================
+COMANDO: useradd
+===============================================================================
+
+DESCRIÇÃO:
+O comando `useradd` é utilizado para criar novos usuários no sistema Linux.
+Ele permite definir diretório home, shell de login, grupos, comentários,
+datas de expiração, UID, tipo de conta (usuário normal ou sistema) e
+outras configurações da conta.
+
+===============================================================================
+SINTAXE GERAL:
+===============================================================================
+
+useradd [opções] LOGIN
+useradd -D
+useradd -D [opções]
+
+Onde:
+- [opções] → parâmetros que configuram a conta do usuário
+- LOGIN    → nome do usuário a ser criado (sempre o último argumento)
+
+IMPORTANTE:
+Os colchetes [ ] NÃO fazem parte do comando real.
+Eles apenas indicam que as opções são opcionais.
+
+===============================================================================
+REGRA DE OURO (LEITURA DE MAN PAGES):
+===============================================================================
+
+useradd + opções de configuração + nome_do_usuario
+
+✔ opções vêm primeiro
+✔ LOGIN vem sempre por último
+
+===============================================================================
+OPÇÕES PRINCIPAIS (TRADUÇÃO):
+===============================================================================
+
+-b, --base-dir BASE_DIR
+    Diretório base onde será criado o diretório home
+
+-c, --comment COMMENT
+    Campo GECOS (nome completo ou descrição do usuário)
+
+-d, --home-dir HOME_DIR
+    Define manualmente o diretório home
+
+-D, --defaults
+    Mostra ou altera configurações padrão do useradd
+
+-e, --expiredate EXPIRE_DATE
+    Data de expiração da conta
+
+-f, --inactive INACTIVE
+    Dias após expiração da senha para desativar a conta
+
+-g, --gid GROUP
+    Grupo primário do usuário (nome ou ID)
+
+-G, --groups GROUPS
+    Grupos suplementares (separados por vírgula)
+
+-k, --skel SKEL_DIR
+    Diretório skeleton alternativo (/etc/skel por padrão)
+
+-m, --create-home
+    Cria o diretório home do usuário
+
+-M, --no-create-home
+    Não cria diretório home
+
+-N, --no-user-group
+    Não cria grupo com o mesmo nome do usuário
+
+-o, --non-unique
+    Permite UID duplicado
+
+-p, --password PASSWORD
+    Define a senha criptografada do usuário
+
+-r, --system
+    Cria um usuário de sistema (UID baixo)
+
+-s, --shell SHELL
+    Define o shell de login
+
+-u, --uid UID
+    Define manualmente o UID
+
+-U, --user-group
+    Cria grupo com o mesmo nome do usuário (padrão)
+
+-h, --help
+    Exibe a ajuda do comando
+
+===============================================================================
+EXEMPLO PRÁTICO COMPLETO:
+===============================================================================
+
+Criar um usuário chamado "joao" com:
+- diretório home criado
+- shell bash
+- comentário (nome completo)
+- grupos adicionais sudo e adm
+
+Comando REAL:
+
+useradd -m -s /bin/bash -c "João da Silva" -G sudo,adm joao
+
+Interpretação do comando:
+
+-m
+    → cria /home/joao
+
+-s /bin/bash
+    → define o bash como shell padrão
+
+-c "João da Silva"
+    → adiciona descrição (campo GECOS)
+
+-G sudo,adm
+    → adiciona o usuário aos grupos suplementares
+
+joao
+    → nome do usuário (LOGIN)
+
+Após criar o usuário, definir a senha:
+
+passwd joao
+
+
+
+===============================================================================
+DÚVIDA:
+===============================================================================
+
+No comando:
+
+useradd -m -s /bin/bash -c "João da Silva" -G sudo,adm joao
+
+O "joao" é o LOGIN ou a SENHA?
+
+===============================================================================
+RESPOSTA CURTA:
+===============================================================================
+
+✔ "joao" é o LOGIN (nome do usuário)
+✖ NÃO é a senha
+
+===============================================================================
+POR QUÊ?
+===============================================================================
+
+A sintaxe do comando é:
+
+useradd [opções] LOGIN
+
+Ou seja:
+- O último argumento SEMPRE é o nome da conta
+- useradd NÃO recebe senha em texto puro
+
+===============================================================================
+COMO FUNCIONA NA PRÁTICA:
+===============================================================================
+
+1) Criar o usuário (LOGIN):
+
+useradd joao
+
+→ Isso cria a conta chamada "joao"
+→ Nenhuma senha é definida aqui
+
+2) Definir a senha (COMANDO SEPARADO):
+
+passwd joao
+
+→ O sistema pede a senha de forma segura
+→ A senha NÃO aparece no terminal
+→ Ela é salva criptografada em /etc/shadow
+
+===============================================================================
+POR QUE A SENHA NÃO VAI NO useradd?
+===============================================================================
+
+- Segurança:
+  - Evita senha visível no histórico do shell
+  - Evita senha aparecendo em "ps aux"
+  - Evita senha em scripts de forma insegura
+
+- Boas práticas de sistema
+
+===============================================================================
+EXISTE EXCEÇÃO?
+===============================================================================
+
+Existe a opção:
+
+-p, --password PASSWORD
+
+MAS:
+- Ela exige a senha JÁ CRIPTOGRAFADA
+- NÃO aceita senha em texto puro
+- NÃO é recomendada para uso manual
+
+Exemplo (didático, NÃO recomendado):
+
+useradd -p '$6$hash...' joao
+
+===============================================================================
+ARQUIVOS DO SISTEMA ENVOLVIDOS:
+===============================================================================
+
+/etc/passwd  → informações básicas do usuário
+/etc/shadow  → senhas criptografadas
+/etc/group   → grupos do sistema
+
+===============================================================================
+RESUMO FINAL:
+===============================================================================
+
+✔ useradd cria usuários
+✔ opções configuram a conta
+✔ LOGIN é sempre o último argumento
+✔ passwd define a senha
+✔ entender a sintaxe facilita leitura de qualquer man page
+===============================================================================
