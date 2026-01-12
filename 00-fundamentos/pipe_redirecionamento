@@ -1,0 +1,112 @@
+##Resumo sobre Pipe##
+--------------------------------------------------------
+|  (PIPE)
+--------------------------------------------------------
+- Conecta a SAÍDA de um comando à ENTRADA de outro
+- Fluxo sempre da ESQUERDA para a DIREITA
+- Não grava em arquivo, apenas repassa dados
+
+Forma geral:
+  comando1 | comando2
+
+--------------------------------------------------------
+FLUXO DE DADOS DO PIPE (PASSO A PASSO)
+--------------------------------------------------------
+1) comando1 é executado
+2) comando1 gera uma saída (stdout)
+3) o pipe | captura essa saída
+4) essa saída vira a entrada (stdin) de comando2
+5) comando2 processa os dados recebidos
+
+Representação mental:
+  comando1 ──stdout──> | ──stdin──> comando2
+
+--------------------------------------------------------
+EXEMPLOS SIMPLES DE FLUXO
+--------------------------------------------------------
+  ls | wc -l
+
+Fluxo:
+  ls        → gera lista de arquivos
+  |         → envia a lista
+  wc -l     → conta quantas linhas recebeu
+
+Resultado:
+  número de arquivos no diretório
+
+--------------------------------------------------------
+EXEMPLO COM TEXTO
+--------------------------------------------------------
+  cat arquivo.txt | grep erro
+
+Fluxo:
+  cat arquivo.txt → envia o conteúdo do arquivo
+  |               → repassa o texto
+  grep erro       → filtra apenas linhas com "erro"
+
+--------------------------------------------------------
+PIPE COM MAIS DE UM COMANDO
+--------------------------------------------------------
+  ls -l | grep ".txt" | wc -l
+
+Fluxo:
+  ls -l        → lista arquivos
+  |            → envia lista
+  grep ".txt"  → mantém só .txt
+  |            → envia resultado
+  wc -l        → conta linhas finais
+
+--------------------------------------------------------
+DIFERENÇA ENTRE PIPE (|) E REDIRECIONAMENTO (>)
+--------------------------------------------------------
+PIPE (|):
+- Envia saída para OUTRO COMANDO
+- Comunicação temporária
+- Dados passam pela memória
+
+Exemplo:
+  ls | wc -l
+  → ls envia saída para wc
+
+--------------------------------------------------------
+REDIRECIONAMENTO (>):
+--------------------------------------------------------
+- Envia saída para um ARQUIVO
+- Pode sobrescrever o arquivo
+- Dados são gravados no disco
+
+Exemplo:
+  ls > lista.txt
+  → ls envia saída para o arquivo lista.txt
+
+--------------------------------------------------------
+REDIRECIONAMENTO DUPLO (>>):
+-------------------------------------------------------
+- NÃO apaga, ele ACRESCENTA no final:
+
+Exemplo
+ → grep "WARN" dados.txt >> erros.txt
+
+--------------------------------------------------------
+COMPARAÇÃO DIRETA
+--------------------------------------------------------
+|  → comando → comando
+>  → comando → arquivo
+
+--------------------------------------------------------
+ERRO COMUM
+--------------------------------------------------------
+  wc -l | ls
+  → errado (wc não gera texto útil para ls)
+
+  ls | wc -l
+  → correto
+
+--------------------------------------------------------
+RESUMO FINAL
+--------------------------------------------------------
+| → stdout de um comando vira stdin de outro
+| → fluxo sempre da esquerda para a direita
+> → redireciona saída para arquivo
+
+--------------------------------------------------------
