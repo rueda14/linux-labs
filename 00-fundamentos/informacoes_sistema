@@ -1,0 +1,191 @@
+## Exibindo informações sobre o sistema com uname ##
+
+---------------------------------------------------------
+1) uname — INFORMAÇÕES DO SISTEMA
+---------------------------------------------------------
+
+- uname mostra informações básicas sobre o sistema
+  operacional e o kernel.
+- Muito usado para identificar ambiente, arquitetura
+  e versão do kernel.
+
+Uso básico:
+uname
+
+Exemplo de saída:
+Linux
+
+Opções mais importantes:
+uname -a  → todas as informações
+uname -s  → nome do kernel
+uname -r  → versão do kernel
+uname -m  → arquitetura da máquina
+uname -o  → sistema operacional
+
+Exemplo:
+uname -a
+Linux maquina 6.1.0-18-amd64 x86_64 GNU/Linux
+
+Resumo:
+uname → identifica kernel, versão e arquitetura
+
+
+---------------------------------------------------------
+2) arch — ARQUITETURA DA MÁQUINA
+---------------------------------------------------------
+
+- arch mostra apenas a arquitetura do sistema.
+- É equivalente a: uname -m
+
+Exemplo:
+arch
+
+Saída comum:
+x86_64
+
+Resumo:
+arch → arquitetura do processador
+
+
+---------------------------------------------------------
+3) lshw — HARDWARE DETALHADO
+---------------------------------------------------------
+
+- lshw lista informações DETALHADAS de hardware.
+- Pode mostrar CPU, memória, discos, rede, etc.
+- Normalmente requer permissões de administrador.
+
+Uso:
+sudo lshw
+
+Saída simplificada:
+sudo lshw -short
+
+Exemplo de informações:
+- processador
+- memória RAM
+- placas de rede
+- discos
+- barramentos
+
+Resumo:
+lshw → visão completa do hardware
+
+
+---------------------------------------------------------
+4) lsblk — DISCOS E PARTIÇÕES
+---------------------------------------------------------
+
+- lsblk mostra dispositivos de bloco (discos).
+- Muito usado para ver HDs, SSDs e partições.
+
+Uso:
+lsblk
+
+Exemplo:
+NAME   SIZE TYPE MOUNTPOINT
+sda    500G disk
+├─sda1 100G part /
+└─sda2 400G part /home
+
+Resumo:
+lsblk → estrutura de discos e partições
+
+
+---------------------------------------------------------
+5) df — USO DE DISCO
+---------------------------------------------------------
+
+- df mostra uso de espaço em disco.
+- -h deixa a saída legível (GB, MB).
+
+Uso:
+df -h
+
+Resumo:
+df → espaço livre e usado em disco
+
+
+---------------------------------------------------------
+6) free — MEMÓRIA RAM
+---------------------------------------------------------
+
+- free mostra uso de memória RAM e swap.
+- -h torna a saída legível.
+
+Uso:
+free -h
+
+Resumo:
+free → uso de memória
+
+
+---------------------------------------------------------
+7) uptime — TEMPO DE ATIVIDADE
+---------------------------------------------------------
+
+- uptime mostra há quanto tempo o sistema está ligado
+  e a carga média do sistema.
+
+Uso:
+uptime
+
+Resumo:
+uptime → tempo ligado e carga do sistema
+
+
+---------------------------------------------------------
+8) hostnamectl — IDENTIDADE DO SISTEMA
+---------------------------------------------------------
+
+- hostnamectl mostra:
+  • nome da máquina
+  • sistema operacional
+  • kernel
+  • arquitetura
+
+Uso:
+hostnamectl
+
+Resumo:
+hostnamectl → identidade do sistema
+
+
+---------------------------------------------------------
+9) inxi — RESUMO GERAL (SE INSTALADO)
+---------------------------------------------------------
+
+- inxi mostra um resumo completo do sistema.
+- Nem sempre vem instalado por padrão.
+
+Uso:
+inxi
+inxi -F   (modo completo)
+
+Resumo:
+inxi → resumo rápido de hardware e sistema
+
+
+---------------------------------------------------------
+10) REGRA MENTAL PARA USO
+---------------------------------------------------------
+
+uname / arch        → quem sou eu (sistema)
+lshw / inxi         → o que tem dentro (hardware)
+lsblk / df          → discos
+free                → memória
+uptime              → estado do sistema
+
+
+---------------------------------------------------------
+11) RESUMO FINAL
+---------------------------------------------------------
+
+uname        → kernel e sistema
+arch         → arquitetura
+lshw         → hardware detalhado
+lsblk        → discos
+df           → espaço em disco
+free         → memória
+uptime       → tempo ligado
+hostnamectl  → identidade do sistema
