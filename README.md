@@ -11,10 +11,7 @@ e aplicação prática.
 
 ## Estrutura do repositório
 - `00-fundamentos/` – conceitos básicos de Linux
-- `10-servicos/` – serviços e gerenciamento do sistema
-- `20-rede-no-linux/` – redes aplicadas ao Linux
-- `30-seguranca/` – permissões, firewall e boas práticas
-- `90-labs/` – laboratórios integrados
+
 
 ## Metodologia
 - Estudo teórico objetivo
