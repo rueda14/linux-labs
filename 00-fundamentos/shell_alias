@@ -1,0 +1,99 @@
+## Trabalhando com Alias ##
+
+1) O que é um alias
+------------------
+- Alias é um APELIDO para um comando.
+- Serve para encurtar comandos longos ou
+  personalizar o uso do terminal.
+- Muito usado para produtividade e segurança.
+
+Exemplo:
+alias ll='ls -lah'
+
+
+2) Criando um alias
+------------------
+- Sintaxe:
+alias nome='comando'
+
+Exemplo:
+alias cls='clear'
+alias gs='git status'
+
+
+3) Usando um alias
+-----------------
+- Basta digitar o nome do alias no terminal.
+
+Exemplo:
+ll
+cls
+gs
+
+
+4) Listar aliases existentes
+----------------------------
+Mostra todos os aliases ativos:
+
+alias
+
+
+5) Remover um alias
+-------------------
+Remove apenas da sessão atual:
+
+unalias ll
+
+
+6) Alias temporário x permanente
+--------------------------------
+
+Temporário:
+- Criado no terminal
+- Some ao fechar o terminal
+
+Permanente:
+- Definido em arquivos de configuração do shell
+
+Arquivos comuns:
+~/.bashrc
+~/.bash_aliases
+~/.zshrc
+
+
+Exemplo permanente (bash):
+Adicionar no arquivo ~/.bashrc ou ~/.bash_aliases:
+
+alias ll='ls -lah'
+alias rm='rm -i'
+
+
+Depois aplicar:
+source ~/.bashrc
+
+
+7) Alias com múltiplos comandos
+-------------------------------
+Pode executar mais de um comando:
+
+alias atualizar='sudo apt update && sudo apt upgrade'
+
+
+8) Alias NÃO aceita argumentos
+------------------------------
+- Alias não recebe parâmetros diretamente.
+- Para isso, deve-se usar FUNÇÕES.
+
+Exemplo (função):
+mkcd() {
+  mkdir "$1"
+  cd "$1"
+}
+
+
+9) Resumo final
+---------------
+- Alias cria atalhos para comandos
+- Melhora produtividade no terminal
+- Ideal para comandos repetitivos
+- Para lógica ou argumentos → usar função
