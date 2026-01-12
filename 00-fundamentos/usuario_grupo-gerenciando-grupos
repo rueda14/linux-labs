@@ -1,0 +1,197 @@
+## Gerenciando Grupos ##
+
+
+===============================================================================
+COMANDO: groupadd
+===============================================================================
+
+DESCRIÇÃO:
+O comando `groupadd` é utilizado para CRIAR novos grupos no sistema Linux.
+Grupos são usados para organizar permissões e controlar o acesso de usuários
+a arquivos, diretórios e recursos do sistema.
+
+RELACIONAMENTO COM OUTROS COMANDOS:
+- groupadd → cria grupos
+- groupmod → modifica grupos existentes
+- groupdel → remove grupos
+- useradd/usermod → associam usuários a grupos
+
+===============================================================================
+SINTAXE GERAL:
+===============================================================================
+
+groupadd [opções] GROUP
+
+Onde:
+- [opções] → parâmetros de configuração do grupo
+- GROUP    → nome do grupo a ser criado (sempre o último argumento)
+
+REGRA DE OURO:
+✔ opções primeiro
+✔ GROUP sempre por último
+✔ GROUP é o nome do grupo, NÃO é usuário nem senha
+
+===============================================================================
+OPÇÕES (TRADUÇÃO E EXPLICAÇÃO):
+===============================================================================
+
+-f, --force
+    Finaliza com sucesso se o grupo já existir
+    Cancela -g se o GID já estiver em uso
+
+-g, --gid GID
+    Define manualmente o GID (Group ID) do grupo
+
+-h, --help
+    Exibe a ajuda do comando
+
+-K, --key KEY=VALUE
+    Sobrescreve valores padrão do /etc/login.defs
+
+-o, --non-unique
+    Permite criar grupos com GID duplicado
+    (uso raro e geralmente não recomendado)
+
+-p, --password PASSWORD
+    Define senha criptografada para o grupo
+    (quase nunca usada em sistemas modernos)
+
+-r, --system
+    Cria um grupo de sistema (GID baixo)
+
+-R, --root CHROOT_DIR
+    Executa o comando dentro de um ambiente chroot
+
+-P, --prefix PREFIX_DIR
+    Define prefixo onde estão localizados os arquivos /etc/*
+
+-U, --users USERS
+    Lista de usuários que já devem fazer parte do grupo
+    (separados por vírgula)
+
+===============================================================================
+EXEMPLOS PRÁTICOS:
+===============================================================================
+
+1) Criar um grupo simples:
+
+groupadd developers
+
+→ Cria o grupo "developers"
+→ O sistema escolhe automaticamente o GID
+
+-------------------------------------------------------
+
+2) Criar um grupo com GID específico:
+
+groupadd -g 1500 developers
+
+→ Grupo "developers" com GID 1500
+
+-------------------------------------------------------
+
+3) Criar um grupo de sistema:
+
+groupadd -r docker
+
+→ Cria grupo de sistema (normalmente GID < 1000)
+
+-------------------------------------------------------
+
+4) Criar grupo e já adicionar usuários:
+
+groupadd -U joao,maria,ana projetos
+
+→ Cria o grupo "projetos"
+→ Adiciona os usuários joao, maria e ana
+
+-------------------------------------------------------
+
+5) Criar grupo sem erro se ele já existir:
+
+groupadd -f developers
+
+→ Não retorna erro se o grupo já existir
+
+------------------------------------------------------
+
+6) Criar um grupo novo e adicionar um usuário existente a esse grupo
+
+PASSO 1 — Criar um novo grupo:
+
+groupadd analytics
+
+→ Cria o grupo "analytics"
+→ Nenhum usuário é associado automaticamente (exceto se usar -U)
+
+-------------------------------------------------------
+
+PASSO 2 — Adicionar um usuário JÁ EXISTENTE ao grupo criado:
+
+usermod -a -G analytics joao
+
+Explicação:
+- usermod        → modifica um usuário existente
+- -a             → append (não remove outros grupos)
+- -G analytics   → grupo suplementar a ser adicionado
+- joao           → LOGIN do usuário
+
+-------------------------------------------------------
+
+RESULTADO:
+- O grupo "analytics" existe no sistema
+- O usuário "joao" passa a fazer parte do grupo "analytics"
+- Os grupos antigos do usuário NÃO são removidos
+
+-------------------------------------------------------
+
+VERIFICAÇÃO (opcional):
+
+groups joao
+ou
+id joao
+
+→ Mostra todos os grupos aos quais o usuário pertence
+
+===============================================================================
+OBSERVAÇÃO IMPORTANTE:
+===============================================================================
+
+NUNCA faça:
+
+usermod -G analytics joao
+
+Sem o -a, isso REMOVE o usuário de todos os outros grupos suplementares.
+
+Sempre use:
+usermod -a -G grupo usuario
+
+
+===============================================================================
+ARQUIVOS DO SISTEMA ENVOLVIDOS:
+===============================================================================
+
+/etc/group
+/etc/gshadow
+
+===============================================================================
+OBSERVAÇÕES IMPORTANTES:
+===============================================================================
+
+- Criar um grupo NÃO cria usuários
+- Usuários podem pertencer a:
+  - 1 grupo primário
+  - vários grupos suplementares
+
+- Para adicionar usuários depois:
+  usermod -a -G grupo usuario
+
+===============================================================================
+RESUMO FINAL:
+===============================================================================
+
+✔ groupadd cria grupos
+✔ GROUP é sempre o último argumento
+✔ GID identifica o grupo no sistema
+✔ Grupos organizam permissões e acessos
+===============================================================================
