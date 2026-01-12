@@ -1,0 +1,263 @@
+##Trabalhando com o comando Tar - Aula 19-20##
+
+--------------------------------------------------------
+tar  (Tape ARchive)
+--------------------------------------------------------
+- Comando usado para AGRUPAR vários arquivos e diretórios
+- Muito usado para BACKUP, TRANSFERÊNCIA e COMPACTAÇÃO
+- O tar por si só NÃO comprime (ele empacota)
+- Pode ser combinado com compressão (gzip, bzip2, xz)
+
+--------------------------------------------------------
+IDEIA PRINCIPAL
+--------------------------------------------------------
+- Junta vários arquivos/diretórios em UM só arquivo (.tar)
+- Facilita:
+  • backup
+  • upload / download
+  • economia de espaço
+  • organização
+
+--------------------------------------------------------
+FORMA GERAL
+--------------------------------------------------------
+tar [opções] arquivo.tar arquivos/
+
+--------------------------------------------------------
+OPÇÕES MAIS IMPORTANTES
+--------------------------------------------------------
+-c  → cria um arquivo tar
+-x  → extrai um arquivo tar
+-v  → modo verboso (mostra o que está acontecendo)
+-f  → especifica o nome do arquivo tar
+-t  → lista o conteúdo do tar
+-z  → usa gzip (.tar.gz)
+-j  → usa bzip2 (.tar.bz2)
+-J  → usa xz (.tar.xz)
+-C  → define diretório de destino
+
+--------------------------------------------------------
+CRIAR UM TAR (SEM COMPRESSÃO)
+--------------------------------------------------------
+Exemplo simples:
+  tar -cvf backup.tar documentos/
+
+→ cria backup.tar com a pasta documentos
+
+Exemplo com vários diretórios:
+  tar -cvf backup.tar docs fotos projetos/
+
+--------------------------------------------------------
+LISTAR CONTEÚDO DO TAR
+--------------------------------------------------------
+  tar -tvf backup.tar
+  → mostra arquivos dentro do tar sem extrair
+
+--------------------------------------------------------
+EXTRAIR UM TAR
+--------------------------------------------------------
+Extrair tudo:
+  tar -xvf backup.tar
+
+Extrair em outro diretório:
+  tar -xvf backup.tar -C /tmp/restore
+
+Extrair arquivos especificos
+  tar -xf arquivos.tar arquivo3.txt (extrai somente esse arquivo)
+  tar -xf arquivos.tar docs/arquivo3.txt (caso esteja em subpasta, passar caminho completo)
+  tar -xvf arquivos.tar --wilcards '*.sh' (extrai todos com essa extenção)
+
+--------------------------------------------------------
+ADICIONAR UM ARQUIVO ou DIRETORIO NO TAR
+--------------------------------------------------------
+  tar -rvf arquivo.tar teste.sh
+
+--------------------------------------------------------
+TAR + GZIP (MUITO USADO)
+--------------------------------------------------------
+- Reduz espaço em disco
+- Bom equilíbrio entre velocidade e compressão
+
+Criar:
+  tar -czvf backup.tar.gz documentos/
+
+Extrair:
+  tar -xzvf backup.tar.gz
+
+--------------------------------------------------------
+TAR + BZIP2
+--------------------------------------------------------
+- Compressão melhor que gzip
+- Mais lento
+
+Criar:
+  tar -cjvf backup.tar.bz2 documentos/
+
+Extrair:
+  tar -xjvf backup.tar.bz2
+
+--------------------------------------------------------
+TAR + XZ
+--------------------------------------------------------
+- Compressão MUITO alta
+- Ideal para economizar espaço e banda
+- Mais lento para criar/extrair
+
+Criar:
+  tar -cJvf backup.tar.xz documentos/
+
+Extrair:
+  tar -xJvf backup.tar.xz
+
+--------------------------------------------------------
+USO EM BACKUP (EXEMPLO REAL)
+--------------------------------------------------------
+Backup do /home:
+  tar -czvf backup_home.tar.gz /home/usuario
+
+Backup com data:
+  tar -czvf backup_$(date +%F).tar.gz /home/usuario
+
+--------------------------------------------------------
+ECONOMIA DE ESPAÇO EM HD
+--------------------------------------------------------
+Antes:
+  pasta com muitos arquivos pequenos
+
+Depois:
+  tar -czvf arquivos.tar.gz pasta/
+
+→ ocupa menos espaço e organiza
+
+--------------------------------------------------------
+UPLOAD / DOWNLOAD DE DIRETÓRIO
+--------------------------------------------------------
+Antes de enviar:
+  tar -czvf site.tar.gz site/
+
+Depois de baixar:
+  tar -xzvf site.tar.gz
+
+→ muito comum em servidores (FTP, SCP, SSH)
+
+--------------------------------------------------------
+TAR + PIPE (AVANÇADO)
+--------------------------------------------------------
+Criar e enviar via SSH:
+  tar -czvf - pasta/ | ssh user@server "cat > backup.tar.gz"
+
+Extrair direto do pipe:
+  tar -xzvf backup.tar.gz | less
+
+--------------------------------------------------------
+ERROS COMUNS
+--------------------------------------------------------
+- Esquecer o -f
+- Trocar a ordem das opções
+- Tentar usar tar como zip sem compressão
+
+Errado:
+  tar backup.tar pasta/
+
+Certo:
+  tar -cvf backup.tar pasta/
+
+
+========================================================
+ORDEM DE COMPACTAÇÃO — TAR
+(do mais simples ao mais compactado)
+========================================================
+
+1) .tar
+--------------------------------------------------------
+- Apenas empacota arquivos e diretórios
+- NÃO aplica compressão
+- Tamanho final ≈ soma dos arquivos originais
+- Muito rápido para criar e extrair
+- Ideal para organização e backup simples
+
+Comando:
+  tar -cvf backup.tar pasta/
+
+Velocidade:
+  Criação: muito alta
+  Extração: muito alta
+
+--------------------------------------------------------
+
+2) .tar.gz   (gzip)
+--------------------------------------------------------
+- Tar combinado com compressão gzip
+- Boa redução de tamanho
+- Excelente equilíbrio entre velocidade e compressão
+- Padrão mais usado em Linux e servidores
+
+Comando:
+  tar -czvf backup.tar.gz pasta/
+
+Velocidade:
+  Criação: alta
+  Extração: alta
+
+--------------------------------------------------------
+
+3) .tar.bz2  (bzip2)
+--------------------------------------------------------
+- Compressão melhor que gzip
+- Arquivo final menor
+- Mais lento para criar e extrair
+- Menos usado hoje, mas ainda comum
+
+Comando:
+  tar -cjvf backup.tar.bz2 pasta/
+
+Velocidade:
+  Criação: média / baixa
+  Extração: média
+
+--------------------------------------------------------
+
+4) .tar.xz   (xz)
+--------------------------------------------------------
+- Maior taxa de compressão
+- Gera os menores arquivos
+- Processo mais lento
+- Ideal quando espaço em disco ou banda é limitado
+
+Comando:
+  tar -cJvf backup.tar.xz pasta/
+
+Velocidade:
+  Criação: baixa
+  Extração: baixa
+
+--------------------------------------------------------
+- .tar      → sem compressão, muito rápido
+- .tar.gz   → rápido e equilibrado (mais usado)
+- .tar.bz2  → melhor compressão, mais lento
+- .tar.xz   → máxima compressão, mais lento
+
+Ordem:
+  .tar < .tar.gz < .tar.bz2 < .tar.xz
+
+========================================================
+
+Exemplo Pratico
+
+root@ubuntu:~# ls -lah | grep mz2
+-rw-r--r-- 1 root root 1.2G jul  9 21:32 mz2.tar
+-rw-r--r-- 1 root root 420M jul  9 21:34 mz2.tar.gz
+-rw-r--r-- 1 root root 310M jul  9 21:33 mz2.tar.bz2
+-rw-r--r-- 1 root root 190M jul  9 21:34 mz2.tar.xz
+
+--------------------------------------------------------
+RESUMO FINAL
+--------------------------------------------------------
+tar → empacota arquivos e diretórios
+tar + gzip  → rápido e comum
+tar + xz    → máxima compressão
+Ideal para:
+- backup
+- economia de espaço
+- transferência de diretórios
+- organização de arquivos
