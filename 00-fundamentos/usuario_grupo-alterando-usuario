@@ -1,0 +1,205 @@
+## Alterando Usuários ##
+
+===============================================================================
+COMANDO: usermod
+===============================================================================
+
+DESCRIÇÃO:
+O comando `usermod` é utilizado para MODIFICAR contas de usuários já existentes
+no sistema Linux. Ele permite alterar login, shell, grupos, UID, diretório home,
+datas de expiração, estado da conta (bloquear/desbloquear), entre outras opções.
+
+DIFERENÇA FUNDAMENTAL:
+- useradd → cria usuários
+- usermod → modifica usuários existentes
+- userdel → remove usuários
+
+===============================================================================
+SINTAXE GERAL:
+===============================================================================
+
+usermod [opções] LOGIN
+
+Onde:
+- [opções] → parâmetros de modificação da conta
+- LOGIN    → usuário que será alterado (sempre o último argumento)
+
+REGRA DE OURO:
+✔ opções primeiro
+✔ LOGIN sempre por último
+✔ LOGIN é o nome da conta, NUNCA a senha
+
+===============================================================================
+OPÇÕES (TRADUÇÃO E EXPLICAÇÃO):
+===============================================================================
+
+-a, --append
+    Adiciona o usuário aos grupos definidos em -G
+    SEM removê-lo dos grupos atuais
+    (use sempre junto com -G)
+
+-b, --badname
+    Permite nomes inválidos (OBSOLETO)
+
+-c, --comment COMMENT
+    Altera o campo GECOS (nome completo / descrição)
+
+-d, --home HOME_DIR
+    Define um novo diretório home
+
+-e, --expiredate EXPIRE_DATE
+    Define a data de expiração da conta
+
+-f, --inactive INACTIVE
+    Define quantos dias após expiração da senha a conta será desativada
+
+-g, --gid GROUP
+    Define um novo grupo primário
+
+-G, --groups GROUPS
+    Define uma nova lista de grupos suplementares
+    ATENÇÃO: sem -a, substitui os grupos existentes
+
+-h, --help
+    Exibe a ajuda do comando
+
+-l, --login NEW_LOGIN
+    Altera o nome do login do usuário
+
+-L, --lock
+    Bloqueia a conta do usuário (impede login)
+
+-m, --move-home
+    Move o conteúdo do diretório home
+    (usar somente junto com -d)
+
+-o, --non-unique
+    Permite UID duplicado
+
+-p, --password PASSWORD
+    Define nova senha criptografada
+    (não aceita senha em texto puro)
+
+-P, --prefix PREFIX_DIR
+    Prefixo onde estão os arquivos /etc/*
+
+-r, --remove
+    Remove o usuário SOMENTE dos grupos informados em -G
+
+-R, --root CHROOT_DIR
+    Executa o comando dentro de um chroot
+
+-s, --shell SHELL
+    Define um novo shell de login
+
+-u, --uid UID
+    Altera o UID do usuário
+
+-U, --unlock
+    Desbloqueia a conta do usuário
+
+-v, --add-subuids FIRST-LAST
+    Adiciona intervalo de sub-UIDs
+
+-V, --del-subuids FIRST-LAST
+    Remove intervalo de sub-UIDs
+
+-w, --add-subgids FIRST-LAST
+    Adiciona intervalo de sub-GIDs
+
+-W, --del-subgids FIRST-LAST
+    Remove intervalo de sub-GIDs
+
+-Z, --selinux-user SEUSER
+    Define usuário SELinux
+
+--selinux-range SERANGE
+    Define intervalo MLS do SELinux
+
+===============================================================================
+EXEMPLOS PRÁTICOS:
+===============================================================================
+
+1) Adicionar usuário a um grupo SEM remover os grupos atuais:
+
+usermod -a -G sudo joao
+
+Explicação:
+- -a  → append (não remove grupos existentes)
+- -G  → grupo adicional
+- joao → LOGIN
+
+-------------------------------------------------------
+
+2) Alterar o shell do usuário:
+
+usermod -s /bin/zsh joao
+
+-------------------------------------------------------
+
+3) Alterar o diretório home e mover os arquivos:
+
+usermod -d /home/novo_joao -m joao
+
+-------------------------------------------------------
+
+4) Alterar o nome de login:
+
+usermod -l joaosilva joao
+
+-------------------------------------------------------
+
+5) Bloquear uma conta:
+
+usermod -L joao
+
+-------------------------------------------------------
+
+6) Desbloquear uma conta:
+
+usermod -U joao
+
+-------------------------------------------------------
+
+7) Alterar grupo primário:
+
+usermod -g developers joao
+
+-------------------------------------------------------
+
+8) Alterar UID do usuário:
+
+usermod -u 2001 joao
+
+===============================================================================
+ARQUIVOS DO SISTEMA MODIFICADOS:
+===============================================================================
+
+/etc/passwd
+/etc/shadow
+/etc/group
+/etc/gshadow
+
+===============================================================================
+ERRO COMUM (MUITO IMPORTANTE):
+===============================================================================
+
+NUNCA faça:
+
+usermod -G sudo joao
+
+Sem -a, isso REMOVE todos os outros grupos do usuário.
+
+Forma CORRETA:
+
+usermod -a -G sudo joao
+
+===============================================================================
+RESUMO FINAL:
+===============================================================================
+
+✔ usermod altera usuários existentes
+✔ LOGIN é sempre o alvo da modificação
+✔ -a + -G evita perda de grupos
+✔ passwd continua sendo o método padrão para senha
+===============================================================================
