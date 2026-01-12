@@ -1,0 +1,130 @@
+## Gerenciando Links Entre Arquivos ##
+Links são arquivos que apontam para outros arquivos
+
+Links físico (hardlink)
+Link simbólico (softlink)
+
+
+
+Link físico (hard link):
+  É o mesmo arquivo, apenas com outro nome.
+  Aponta para o mesmo inode e não ocupa espaço extra.
+  O arquivo só é removido quando todos os links são apagados.
+
+Link simbólico (soft link):
+  Funciona como um atalho para o caminho do arquivo.
+  Possui inode próprio e ocupa pouquíssimo espaço.
+  Se o arquivo original for apagado ou movido, o link quebra.
+
+Cópia de arquivo:
+  Cria um arquivo novo e independente.
+  Possui inode diferente e duplica o espaço em disco.
+  Não depende do arquivo original para existir.
+
+Resumo final:
+Hard link = mesmo arquivo
+Soft link = atalho
+Cópia = arquivo novo
+
+
+
+O que é um INODE?
+Um inode é a estrutura do sistema de arquivos que guarda as informações do arquivo, não o nome.
+
+Ele armazena:
+
+--> dono e permissões
+--> tamanho
+--> datas (criação, modificação, acesso)
+--> localização dos dados no disco
+
+
+Nome do arquivo != Inode
+Nome é um rótulo que aponta para o Inode
+
+
+
+HARD LINK
+
+1) Comando para criar hard link
+-------------------------------
+Sintaxe:
+    ln arquivo_original novo_nome
+
+Exemplo:
+    ln arquivo.txt arquivo_link.txt
+
+- arquivo.txt        → arquivo já existente
+- arquivo_link.txt   → novo nome para o mesmo arquivo
+
+2) Como listar e verificar hard links
+------------------------------------
+Comando:
+    ls -l
+
+- Mostra a quantidade de links (segunda coluna).
+- Se o número for maior que 1, o arquivo possui hard links.
+
+Para ver o inode:
+    ls -i
+
+Exemplo:
+    ls -i arquivo.txt arquivo_link.txt
+
+- Se os números forem iguais, os arquivos compartilham o mesmo inode.
+
+3) Apagar um arquivo com hard link
+----------------------------------
+Comando:
+    rm arquivo.txt
+
+- O conteúdo NÃO é apagado se ainda existir outro hard link.
+- O inode só é liberado quando o último link for removido.
+
+4) Observações importantes
+--------------------------
+- Hard links NÃO funcionam entre sistemas de arquivos diferentes.
+- Normalmente NÃO são usados para diretórios.
+- Todos os links têm o mesmo nível de importância (não existe "original").
+
+
+
+SOFT LINK
+
+1) ÚNICA sintaxe para criar soft link
+-------------------------------------
+    ln -s ALVO LINK
+
+- ALVO → arquivo ou diretório real
+- LINK → nome do atalho que será criado
+
+2) Exemplo com ARQUIVO
+----------------------
+    ln -s arquivo.txt atalho.txt
+
+3) Exemplo com DIRETÓRIO
+------------------------
+    ln -s /home/usuario/Projetos Projetos_atalho
+
+- Projetos_atalho é apenas um atalho para a pasta Projetos.
+- Pode usar normalmente:
+    cd Projetos_atalho
+
+4) Como identificar um soft link
+--------------------------------
+    ls -l
+
+- Aparece com "->"
+- Começa com a letra "l"
+
+5) Remover o soft link
+----------------------
+    rm Projetos_atalho
+
+- Remove só o atalho.
+- O alvo continua existindo.
+
+RESUMO FINAL:
+-------------
+Soft link = atalho (arquivo ou diretório)
+Comando único: ln -s ALVO LINK
