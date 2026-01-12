@@ -1,0 +1,168 @@
+##Usando metacaracteres e operadores ##
+
+Metacaracteres são símbolos especiais usados pelo shell para seleção de
+ arquivos (globbing) e redirecionamento de entrada e saída de dados.
+
+--------------------------------------------------------
+*  (ASTERISCO)
+--------------------------------------------------------
+- Representa zero ou mais caracteres
+- Seleciona vários arquivos de uma vez
+
+Arquivos de exemplo:
+  touch banana limao maca uva laranja
+
+Exemplo 1:
+  ls *
+  → lista todos os arquivos do diretório
+
+  ls l*
+  → lista limao e laranja
+
+  rm *a
+  → remove banana, maca e uva
+
+Exemplo 2:
+  ls *.txt
+  → lista todos os arquivos .txt
+
+  cp img* /backup/
+  → copia todos os arquivos que começam com "img"
+
+  rm arquivo*
+  → remove todos os arquivos que iniciam com "arquivo"
+
+
+--------------------------------------------------------
+?  (INTERROGAÇÃO)
+--------------------------------------------------------
+- Representa exatamente um caractere
+
+Arquivos de exemplo:
+  touch banana limao maca uva laranja
+
+Exemplo 1:
+  ls ?????
+  → lista apenas arquivos com 5 letras (maca, uva)
+
+  ls b?????
+  → lista banana
+
+  ls l?????
+  → lista limao
+
+Exemplo 2:
+  ls foto?.jpg
+  → foto1.jpg, fotoA.jpg
+
+  cp relatorio?.pdf /docs/
+  → relatorio1.pdf, relatorio2.pdf
+
+  rm log?.txt
+  → remove log1.txt, log2.txt
+
+
+--------------------------------------------------------
+[]  (COLCHETES)
+--------------------------------------------------------
+- Representa um único caractere dentro de um conjunto
+- Permite intervalos
+
+Arquivos de exemplo:
+  touch banana limao maca uva laranja
+
+Exemplo 1:
+  ls [bm]*
+  → lista banana e maca
+
+  ls l[ai]*
+  → lista limao e laranja
+
+  ls *[aeiou]
+  → lista arquivos que terminam com vogal
+
+Exemplo 2:
+  ls arquivo[123].txt
+  → arquivo1.txt, arquivo2.txt, arquivo3.txt
+
+  ls foto[0-9].png
+  → foto0.png até foto9.png
+
+  rm teste[a-c].log
+  → remove testea.log, testeb.log, testec.log
+
+--------------------------------------------------------
+<  (REDIRECIONAMENTO DE ENTRADA)
+--------------------------------------------------------
+- Usa um arquivo como entrada de um comando
+
+Exemplos:
+  sort < nomes.txt
+  → ordena o conteúdo de nomes.txt
+
+  wc -l < arquivo.txt
+  → conta linhas de arquivo.txt
+
+  grep "erro" < sistema.log
+  → busca "erro" dentro do arquivo
+
+--------------------------------------------------------
+>  (REDIRECIONAMENTO DE SAÍDA)
+--------------------------------------------------------
+- Redireciona a saída de um comando para um arquivo
+- SOBRESCREVE o arquivo se ele já existir
+
+Exemplos:
+  ls > lista.txt
+  → salva a listagem de arquivos em lista.txt
+
+  echo "exemplo de texto" > projeto.txt
+  → grava o texto no arquivo projeto.txt
+
+  date > data.txt
+  → salva a data atual no arquivo
+
+--------------------------------------------------------
+{}  (EXPANSÃO DE CHAVES)
+--------------------------------------------------------
+- Usado para gerar múltiplos textos ou nomes automaticamente
+- O shell expande as opções antes de executar o comando
+- NÃO depende de arquivos existentes
+
+Arquivos de exemplo:
+  touch teste{1,2,3,4,5}
+
+Exemplo 1:
+  ls teste{1,3,5}
+  → lista teste1, teste3 e teste5
+
+  rm teste{2,4}
+  → remove teste2 e teste4
+
+Exemplo 2:
+  touch arquivo_{a,b,c}.txt
+  → cria arquivo_a.txt, arquivo_b.txt e arquivo_c.txt
+
+  cp arquivo_{a,b}.txt /backup/
+  → copia arquivo_a.txt e arquivo_b.txt
+
+Exemplo 3 (intervalo):
+  touch log{1..5}.txt
+  → cria log1.txt até log5.txt
+
+  rm log{3..5}.txt
+  → remove log3.txt, log4.txt e log5.txt
+
+
+--------------------------------------------------------
+RESUMO FINAL
+--------------------------------------------------------
+*  → vários caracteres
+?  → um caractere
+[] → um caractere entre opções
+<  → entrada a partir de arquivo
+>  → saída para arquivo (sobrescreve)
+{} → expansão de chaves (gera múltiplos nomes/valores)
+
+
+========================================================
