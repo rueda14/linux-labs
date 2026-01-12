@@ -1,0 +1,35 @@
+## Manipulando Arquivos ##
+
+mkdir - criar diretório no lugar que você estiver
+	Exemplo: mkdir Documents
+		 mkdir Musics
+		 mkdir pasta1 pasta2 pasta3
+		 mkdir Documentos/teste (pasta pai existe)
+		 mkdir -p pasta_pai/pasta_filho (quando a pasta pai não existe)
+
+		
+cd - change directory
+
+
+ls - Listar o conteúdo de um diretório
+	ls -lh  Lista em formato de lista e transforma os valores em numeros legíveis
+
+
+cp - copy
+	cp arquivo.txt novo_nome.txt (mesmo diretório)
+	cp arquivo.txt Imagens/
+	cp arquivo1.txt arquivo2.txt Documentos/( copia dois arquivos para Documentos)
+	cp -r arquivo.tx Documentos/Teste (copiar um arquivo para um subdiretório)
+	cp * /caminho/da/pasta_destino/ (copiar todos os arquivos da pasta atual mas não copiar subpastas)
+	cp -r * /caminho/da/pasta_destino/ (copiar todos os arquivos da pasta atual e suas subpastas)
+	
+
+mv - mover/renomear
+	mv arquivo1.txt arquivo2.txt (renomear)
+	mv arquivo1.txt Documentos/ (moveu para Documentos)
+	mv -v arquivo1.txt Videos/ (Mostra na tela o que foi movido)
+
+
+rm - remoção      ####  Cuidado - Não pode ser recuperado ####
+	rm -rf Pasta1/ (apagando diretório recursivamente)
+	rm arquivo1.txt
