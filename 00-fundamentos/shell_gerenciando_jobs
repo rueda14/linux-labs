@@ -1,0 +1,67 @@
+## Gerenciando Jobs no Shell ##
+
+
+1) Processos no Shell
+--------------------
+- São processos iniciados PELO USUÁRIO.
+- Normalmente começam quando um comando é executado
+  no terminal (shell).
+- Estão ligados a uma sessão do usuário.
+- Em geral, terminam quando:
+  a) o comando finaliza
+  b) o usuário fecha o terminal
+- Podem rodar em primeiro plano (foreground)
+  ou em segundo plano (background).
+
+Exemplos:
+ls
+nano arquivo.txt
+gcc main.c
+firefox &
+top
+
+
+2) Daemons
+----------
+- São processos que rodam EM SEGUNDO PLANO,
+  normalmente desde a inicialização do sistema.
+- NÃO dependem de um terminal ou usuário logado.
+- Fornecem serviços contínuos ao sistema.
+- Geralmente têm nomes terminando com "d".
+
+Exemplos:
+sshd    (acesso remoto)
+cron    (tarefas agendadas)
+systemd (gerenciador de serviços)
+cupsd  (impressão)
+
+
+3) Diferença principal (em uma frase)
+-------------------------------------
+- Processo de shell → nasce da ação do usuário
+- Daemon            → nasce para prestar serviço
+                       contínuo ao sistema
+
+
+4) Comparação direta
+--------------------
+Processo no shell:
+- Interativo
+- Temporário
+- Ligado ao terminal
+- Controlado pelo usuário
+
+Daemon:
+- Não interativo
+- Permanente
+- Sem terminal
+- Controlado pelo sistema
+
+
+5) Resumo final
+---------------
+- Todo daemon é um processo
+- Nem todo processo é um daemon
+- Shell lida com processos do usuário
+- Daemons mantêm o sistema funcionando
+
