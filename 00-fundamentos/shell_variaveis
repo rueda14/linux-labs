@@ -1,0 +1,115 @@
+## Utilizando variáveis no Shell ##
+
+
+=========================================================
+VARIÁVEIS NO SHELL — RESUMO COM EXEMPLOS
+=========================================================
+
+1) O que são variáveis no Shell
+-------------------------------
+- Variáveis no shell armazenam VALORES em memória.
+- Podem guardar texto, números, caminhos, comandos, etc.
+- São usadas para reutilizar valores e automatizar scripts.
+- NÃO existe tipo explícito (tudo é texto).
+
+Exemplo:
+nome="Rueda"
+
+
+2) Criando variáveis
+-------------------
+- NÃO pode haver espaço antes ou depois do "="
+
+Correto:
+idade=21
+curso="Engenharia"
+
+Errado:
+idade = 21
+
+
+3) Usando variáveis
+------------------
+- Para acessar o valor, usa-se "$"
+
+Exemplo:
+echo $nome
+echo "Idade: $idade"
+
+
+4) Variáveis locais x variáveis de ambiente
+--------------------------------------------
+
+Variável local:
+- Existe apenas no shell atual
+
+Exemplo:
+cidade="Ribeirão Preto"
+
+Variável de ambiente:
+- É herdada por programas e subprocessos
+- Criada com export
+
+Exemplo:
+export PATH_NOVO="/meu/caminho"
+
+
+5) Variáveis especiais do Shell
+--------------------------------
+
+$0  → nome do script
+$1  → primeiro argumento
+$2  → segundo argumento
+$#  → quantidade de argumentos
+$@  → todos os argumentos
+$?  → código de saída do último comando
+$$  → PID do shell atual
+
+
+6) Variáveis internas importantes
+---------------------------------
+
+HOME  → diretório do usuário
+USER  → nome do usuário
+PATH  → caminhos de execução de comandos
+PWD   → diretório atual
+
+Exemplo:
+echo $HOME
+echo $PATH
+
+
+7) Substituição de comandos
+---------------------------
+- Armazena a saída de um comando em uma variável
+
+Exemplo:
+data=$(date)
+echo "Data atual: $data"
+
+
+8) Operações simples com números
+---------------------------------
+- Usar aritmética com $(( ))
+
+Exemplo:
+a=10
+b=5
+soma=$((a + b))
+echo $soma
+
+
+9) Removendo variáveis
+----------------------
+- Usar unset
+
+Exemplo:
+unset nome
+
+
+10) Resumo final
+----------------
+- Variáveis facilitam reutilização de valores
+- São fundamentais para scripts e automação
+- $ é obrigatório para acessar o conteúdo
+- export cria variáveis de ambiente
