@@ -1,0 +1,190 @@
+## Obtendo informações sobre comandos ##
+
+---------------------------------------------------------
+1) ls /bin  — LISTA DE COMANDOS
+---------------------------------------------------------
+
+- /bin é um diretório que contém PROGRAMAS ESSENCIAIS
+  do sistema (executáveis básicos).
+- Quando você roda:
+  ls /bin
+  você está listando COMANDOS disponíveis no sistema,
+  não arquivos de texto comuns.
+
+Exemplos de comandos em /bin:
+ls
+cp
+mv
+rm
+cat
+grep
+bash
+ps
+kill
+
+Importante:
+- Cada nome listado pode ser executado como comando
+  porque é um arquivo executável.
+- Nem todos os comandos ficam em /bin:
+  outros ficam em /usr/bin, /sbin, /usr/sbin, etc.
+
+Resumo:
+ls /bin → lista programas/comandos essenciais do sistema
+
+
+---------------------------------------------------------
+2) help — AJUDA DO SHELL
+---------------------------------------------------------
+
+- help mostra ajuda de COMANDOS INTERNOS do shell.
+- Funciona apenas para comandos embutidos (built-ins).
+
+Exemplo:
+help cd
+help history
+help alias
+
+Quando usar:
+- Para comandos do próprio shell (cd, exit, help, alias)
+
+Quando NÃO funciona:
+help ls
+(help ls não existe porque ls é um programa externo)
+
+
+---------------------------------------------------------
+3) --help e -h — AJUDA RÁPIDA DO COMANDO
+---------------------------------------------------------
+
+- Muitos comandos externos possuem opções de ajuda.
+- --help é o padrão mais comum.
+- -h pode existir, mas NÃO é garantido.
+
+Exemplos:
+ls --help
+grep --help
+ps --help
+
+O que mostra:
+- descrição do comando
+- opções disponíveis
+- uso básico
+
+Resumo:
+--help → ajuda rápida e prática
+-h     → pode existir, mas nem sempre
+
+
+---------------------------------------------------------
+4) man — MANUAL COMPLETO
+---------------------------------------------------------
+
+- man abre o MANUAL oficial do comando.
+- É mais detalhado que --help.
+
+Exemplo:
+man ls
+man grep
+man bash
+
+Comandos úteis dentro do man:
+q      → sair
+/termo → buscar termo
+n      → próxima ocorrência
+
+Resumo:
+man → documentação completa e oficial
+
+
+---------------------------------------------------------
+5) info — DOCUMENTAÇÃO EM TEXTO ESTRUTURADA
+---------------------------------------------------------
+
+- info é uma alternativa ao man.
+- Mais detalhado e organizado em tópicos.
+- Usa navegação por links.
+
+Exemplo:
+info ls
+info coreutils
+
+Resumo:
+info → documentação extensa e navegável
+man  → referência rápida e tradicional
+
+
+---------------------------------------------------------
+6) ORDEM ENTRE OPÇÕES E ARGUMENTOS
+---------------------------------------------------------
+
+Regra geral:
+COMANDO [OPÇÕES] [ARGUMENTOS]
+
+Exemplo:
+ls -l /bin
+
+Onde:
+- ls        → comando
+- -l        → opção
+- /bin      → argumento
+
+
+---------------------------------------------------------
+7) MÚLTIPLAS OPÇÕES
+---------------------------------------------------------
+
+Opções separadas:
+ls -l -a -h
+
+Opções combinadas:
+ls -lah
+
+Resultado é o mesmo.
+
+
+---------------------------------------------------------
+8) ORDEM DAS OPÇÕES IMPORTA?
+---------------------------------------------------------
+
+Na MAIORIA dos comandos:
+- A ordem das opções NÃO importa.
+
+Exemplos equivalentes:
+ls -la /bin
+ls -al /bin
+
+Porém:
+- Argumentos geralmente vêm no final.
+- Algumas opções ESPERAM um valor logo após.
+
+Exemplo:
+grep -n "erro" arquivo.txt
+     |    |        |
+   opção  valor   argumento
+
+
+---------------------------------------------------------
+9) REGRA MENTAL PARA NÃO ERRAR
+---------------------------------------------------------
+
+Pense assim:
+1) Nome do comando
+2) Opções (como ele deve se comportar)
+3) Alvos (arquivos, diretórios, textos)
+
+Exemplo:
+grep -i -n "erro" log.txt
+
+
+---------------------------------------------------------
+10) RESUMO FINAL
+---------------------------------------------------------
+
+ls /bin   → lista comandos executáveis
+help      → ajuda do shell (built-ins)
+--help    → ajuda rápida do comando
+man       → manual completo
+info      → documentação estruturada
+
+Ordem:
+comando → opções → argumentos
