@@ -1,0 +1,74 @@
+## Conhecendo uma Shell ##
+
+	|--Aplicações----------------------|
+        |                                  |
+	| |----Shell---------------------| |
+        | |                              | |
+	| | |------Kernel--------------| | |
+        | | |                          | | |
+	| | |  |-----Hardware------|   | | |
+        | | |                          | | |
+        | | |--------------------------| | |
+        | |                              | |
+        | |------------------------------| | 
+        |                                  |   
+        |----------------------------------|
+
+
+=========================================================
+SHELL — O QUE É E QUAL A SUA IMPORTÂNCIA
+=========================================================
+
+1) O que é o Shell
+------------------
+- O shell é um PROGRAMA que funciona como INTERFACE
+  entre o usuário e o sistema operacional.
+- Ele recebe comandos do usuário, interpreta esses
+  comandos e solicita ao Kernel que execute as ações.
+- Pode ser usado em modo texto (terminal) ou gráfico.
+
+Exemplos de shells comuns:
+- bash
+- sh
+- zsh
+- fish
+
+
+2) Função do Shell no sistema
+-----------------------------
+Usuário → Shell → Kernel → Hardware
+
+- O shell NÃO acessa o hardware diretamente.
+- Ele traduz comandos (ls, cd, cp, rm, etc.)
+  em chamadas que o Kernel entende.
+- O Kernel executa as operações reais no sistema.
+
+
+3) Importância do Shell
+-----------------------
+- Permite interação direta com o sistema operacional
+- Torna possível executar programas e scripts
+- Automatiza tarefas por meio de scripts (.sh)
+- Facilita administração do sistema (usuários,
+  permissões, processos, serviços)
+- É essencial em servidores e ambientes sem interface gráfica
+
+
+4) Shell Script
+---------------
+- Shell script é um arquivo com uma sequência
+  de comandos do shell.
+- Usado para automação, instalação, backup,
+  monitoramento e manutenção do sistema.
+
+Exemplo simples:
+#!/bin/bash
+echo "Olá, mundo"
+
+
+5) Resumo final
+---------------
+- O shell é o "intérprete de comandos" do Linux/Unix
+- Ele conecta o usuário ao Kernel de forma segura
+- Sem o shell, a interação com o sistema seria
+  muito limitada ou impossível
