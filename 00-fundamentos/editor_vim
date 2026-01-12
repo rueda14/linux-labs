@@ -1,0 +1,136 @@
+## Conhecendo o VIM ##
+
+
+O vi é um editor de texto MODAL. Ele não “obedece” porque cada tecla
+faz algo diferente dependendo do MODO atual.
+
+--------------------------------------------------------------------
+1) MODOS PRINCIPAIS
+--------------------------------------------------------------------
+
+1. MODO NORMAL (padrão ao abrir)
+   - Usado para navegar, apagar, copiar, colar e executar comandos
+   - NÃO escreve texto
+
+2. MODO INSERT
+   - Usado para digitar texto normalmente
+
+3. MODO COMMAND / EX
+   - Usado para salvar, sair, procurar, etc.
+   - Começa com ':'
+
+
+--------------------------------------------------------------------
+2) ABRIR ARQUIVO
+--------------------------------------------------------------------
+
+vi arquivo.txt
+- Se o arquivo não existir, ele será criado
+- O vi sempre inicia no MODO NORMAL
+
+
+--------------------------------------------------------------------
+3) ENTRAR NO MODO INSERT (DIGITAR TEXTO)
+--------------------------------------------------------------------
+
+No MODO NORMAL:
+
+i  -> inserir antes do cursor
+a  -> inserir depois do cursor
+o  -> nova linha abaixo
+O  -> nova linha acima
+
+Depois disso, digite normalmente
+
+
+--------------------------------------------------------------------
+4) SAIR DO MODO INSERT
+--------------------------------------------------------------------
+
+ESC
+- Sempre volta para o MODO NORMAL
+- Apertar ESC várias vezes é seguro
+
+
+--------------------------------------------------------------------
+5) SALVAR E SAIR
+--------------------------------------------------------------------
+
+(no MODO NORMAL)
+
+:w      -> salvar
+:q      -> sair
+:wq     -> salvar e sair
+:q!     -> sair sem salvar (forçar)
+ZZ      -> salvar e sair (atalho)
+
+
+--------------------------------------------------------------------
+6) NAVEGAÇÃO (MODO NORMAL)
+--------------------------------------------------------------------
+
+h  -> esquerda
+l  -> direita
+j  -> baixo
+k  -> cima
+
+0  -> início da linha
+$  -> fim da linha
+gg -> início do arquivo
+G  -> fim do arquivo
+
+
+--------------------------------------------------------------------
+7) APAGAR, COPIAR E COLAR (MODO NORMAL)
+--------------------------------------------------------------------
+
+x   -> apaga um caractere
+dd  -> apaga a linha inteira
+yy  -> copia a linha
+p   -> cola abaixo
+P   -> cola acima
+
+
+--------------------------------------------------------------------
+8) COMANDOS ÚTEIS
+--------------------------------------------------------------------
+
+/texto   -> procurar "texto"
+n        -> próxima ocorrência
+N        -> ocorrência anterior
+u        -> desfazer
+CTRL+r   -> refazer
+
+
+--------------------------------------------------------------------
+9) EM CASO DE DESESPERO
+--------------------------------------------------------------------
+
+ESC
+:q!
+
+- ESC sempre te traz para um estado seguro
+- :q! sai sem salvar de qualquer situação
+
+
+--------------------------------------------------------------------
+10) FLUXO MENTAL BÁSICO (O MAIS IMPORTANTE)
+--------------------------------------------------------------------
+
+vi arquivo.txt
+ESC        -> garantir modo normal
+i          -> entrar em insert
+(digitar)
+ESC        -> sair do insert
+:wq        -> salvar e sair
+
+
+--------------------------------------------------------------------
+OBSERVAÇÃO (DEBIAN)
+--------------------------------------------------------------------
+
+- Em muitos sistemas, "vi" é um atalho para "vim"
+- Para uma experiência melhor:
+
+sudo apt install vim
+vim arquivo.txt
