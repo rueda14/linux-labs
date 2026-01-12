@@ -1,0 +1,184 @@
+## Conceito de Usuário e Grupo ##
+
+USUÁRIO
+-------
+Um usuário é uma identidade no sistema Linux.
+
+Cada usuário:
+- Representa uma pessoa, serviço ou programa
+- Possui um nome (login) e um ID numérico (UID)
+- Tem permissões próprias
+- Executa processos no sistema
+
+Exemplos:
+- rueda        -> usuário humano
+- root         -> administrador do sistema
+- www-data     -> usuário de serviços (ex: servidor web)
+
+
+GRUPO
+-----
+Um grupo é um conjunto de usuários.
+
+Cada grupo:
+- Tem um nome e um ID (GID)
+- Serve para organizar permissões
+- Facilita o controle de acesso a arquivos e recursos
+
+Um usuário pode:
+- Pertencer a vários grupos
+- Usar grupos para compartilhar acesso a arquivos
+
+
+RELAÇÃO ENTRE USUÁRIO E GRUPO
+----------------------------
+- Todo usuário pertence a pelo menos um grupo
+- Arquivos no Linux têm:
+  -> um dono (usuário)
+  -> um grupo
+- As permissões são aplicadas em três níveis:
+  -> usuário (owner)
+  -> grupo
+  -> outros (others)
+
+
+EXEMPLO PRÁTICO
+---------------
+- Arquivo pertence ao usuário "rueda"
+- Grupo do arquivo é "dev"
+- Permissões permitem leitura ao grupo
+=> Todos os usuários do grupo "dev" podem ler o arquivo
+
+
+RESUMO EM UMA FRASE
+------------------
+Usuário = quem executa ações no sistema
+Grupo   = conjunto de usuários que compartilham permissões
+
+
+  id, ls -l, ps -all, ps -au
+FOCO: USUÁRIOS E GRUPOS NO LINUX
+====================================================================
+
+--------------------------------------------------------------------
+1) COMANDO: id
+--------------------------------------------------------------------
+Mostra a identidade do usuário atual (ou de outro usuário).
+
+Exemplo:
+id
+id rueda
+
+Informações exibidas:
+- UID  -> ID do usuário
+- GID  -> ID do grupo principal
+- Grupos -> todos os grupos aos quais o usuário pertence
+
+Exemplo de saída (simplificada):
+uid=1000(rueda) gid=1000(rueda) groups=1000(rueda),27(sudo)
+
+Interpretação:
+- O usuário se chama "rueda"
+- Seu grupo principal é "rueda"
+- Ele também pertence ao grupo "sudo"
+
+
+--------------------------------------------------------------------
+2) COMANDO: ls -l
+--------------------------------------------------------------------
+Lista arquivos mostrando dono e grupo.
+
+Exemplo:
+ls -l
+
+Exemplo de saída:
+-rw-r--r-- 1 rueda dev  1234 arquivo.txt
+
+Campos importantes:
+- rueda -> usuário dono do arquivo
+- dev   -> grupo dono do arquivo
+
+Relação com permissões:
+- Primeiro conjunto: permissões do usuário dono
+- Segundo conjunto: permissões do grupo
+- Terceiro conjunto: permissões de outros
+
+Objetivo do comando:
+- Identificar quem é o dono do arquivo
+- Identificar qual grupo tem acesso ao arquivo
+
+
+--------------------------------------------------------------------
+3) COMANDO: ps -all (ou ps -A)
+--------------------------------------------------------------------
+Mostra TODOS os processos do sistema.
+
+Exemplo:
+ps -all
+
+Coluna importante:
+- USER -> usuário que iniciou o processo
+
+Exemplo simplificado:
+USER     PID   COMMAND
+root     1     systemd
+rueda    2345  bash
+
+Interpretação:
+- Processos pertencem a usuários
+- Serviços do sistema geralmente rodam como root
+- Programas do usuário rodam com o nome do usuário
+
+
+--------------------------------------------------------------------
+4) COMANDO: ps -au
+--------------------------------------------------------------------
+Mostra processos associados a usuários, com mais detalhes.
+
+Exemplo:
+ps -au
+
+Colunas importantes:
+- USER -> dono do processo
+- PID  -> identificador do processo
+- %CPU / %MEM -> uso de recursos
+
+Exemplo:
+USER     PID   %CPU %MEM COMMAND
+rueda    3456  0.1  1.2  firefox
+
+Interpretação:
+- Cada processo pertence a um usuário
+- Usuários diferentes não controlam processos uns dos outros
+- O root pode ver e controlar todos
+
+
+--------------------------------------------------------------------
+5) RELAÇÃO GERAL ENTRE OS COMANDOS
+--------------------------------------------------------------------
+
+id      -> mostra quem é o usuário e seus grupos
+ls -l   -> mostra usuário e grupo donos de arquivos
+ps -all -> mostra usuários donos dos processos
+ps -au  -> detalha processos por usuário
+
+Todos reforçam o mesmo conceito:
+- Usuários executam ações
+- Grupos organizam permissões
+- Arquivos e processos sempre têm um usuário associado
+
+
+--------------------------------------------------------------------
+RESUMO FINAL
+--------------------------------------------------------------------
+Usuários:
+- Executam processos
+- São donos de arquivos
+
+Grupos:
+- Organizam permissões
+- Facilitam compartilhamento de acesso
+
+Os comandos id, ls -l e ps existem para:
+- Identificar quem é quem no sistema
+- Controlar acesso e segurança
