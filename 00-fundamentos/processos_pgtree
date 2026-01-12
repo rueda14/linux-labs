@@ -1,0 +1,89 @@
+## Gerenciamento de processo com pgtree ##
+
+===============================================================================
+COMANDO: pstree  → visualização hierárquica de processos
+===============================================================================
+
+DESCRIÇÃO:
+O comando `pstree` mostra os processos do sistema em formato de ÁRVORE,
+indicando a relação entre processos pai e processos filhos.
+É útil para entender quem iniciou quem no sistema.
+
+===============================================================================
+USO BÁSICO:
+===============================================================================
+
+pstree
+→ Mostra a árvore completa de processos
+
+pstree usuario
+→ Mostra apenas processos pertencentes a um usuário
+
+pstree PID
+→ Mostra a árvore a partir de um processo específico
+
+===============================================================================
+OPÇÕES MAIS COMUNS:
+===============================================================================
+
+-a
+→ Mostra argumentos completos dos comandos
+
+-p
+→ Mostra o PID junto ao nome do processo
+
+-u
+→ Mostra o usuário dono do processo
+
+-h
+→ Destaca o processo atual e seus ancestrais
+
+===============================================================================
+COMO LER A ÁRVORE:
+===============================================================================
+
+systemd─┬─NetworkManager
+        ├─sshd───sshd───bash
+        ├─cron
+        └─cupsd
+
+systemd
+→ Processo raiz (PID 1)
+
+Linhas e símbolos:
+├─  → ramificação
+└─  → último filho
+│   → continuação da árvore
+
+===============================================================================
+CASOS PRÁTICOS:
+===============================================================================
+
+1) Ver quem iniciou um processo:
+
+pstree -p | grep sshd
+
+2) Entender processos duplicados:
+
+pstree -p -u
+
+3) Analisar serviços rodando:
+
+pstree systemd
+
+===============================================================================
+DIFERENÇA PARA O TOP:
+===============================================================================
+
+pstree → relação pai/filho (estrutura)
+top    → consumo de recursos (CPU/RAM)
+
+===============================================================================
+RESUMO FINAL:
+===============================================================================
+
+✔ Visualiza processos em árvore
+✔ Mostra hierarquia pai → filho
+✔ Útil para depuração e análise
+✔ systemd é quase sempre a raiz
+===============================================================================
