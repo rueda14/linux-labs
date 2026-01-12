@@ -1,0 +1,105 @@
+## Trabalhando com arquivos gzip e gunzip ##
+
+
+=========================================================
+GZIP e GUNZIP — RESUMO PRÁTICO (Linux / Debian)
+=========================================================
+
+1) O que é o gzip
+-----------------
+- gzip é uma ferramenta de COMPRESSÃO de arquivos.
+- Ele NÃO agrupa vários arquivos sozinho (isso é função do tar).
+- Normalmente gera arquivos com extensão .gz
+- Substitui o arquivo original pelo arquivo compactado.
+
+Exemplo:
+arquivo.txt  →  arquivo.txt.gz
+
+
+2) O que é o gunzip
+------------------
+- gunzip é a ferramenta de DESCOMPRESSÃO do gzip.
+- Ela restaura o arquivo original.
+- Remove o arquivo .gz após extrair.
+
+Exemplo:
+arquivo.txt.gz  →  arquivo.txt
+
+
+3) Comandos básicos
+-------------------
+
+Compactar um arquivo:
+gzip arquivo.txt
+
+Resultado:
+arquivo.txt.gz
+
+
+Descompactar um arquivo:
+gunzip arquivo.txt.gz
+
+Resultado:
+arquivo.txt
+
+
+4) Manter o arquivo original (-k)
+---------------------------------
+
+Compactar sem apagar o original:
+gzip -k arquivo.txt
+
+Gera:
+arquivo.txt
+arquivo.txt.gz
+	
+
+Descompactar sem apagar o .gz:
+gunzip -k arquivo.txt.gz
+
+Gera:
+arquivo.txt.gz
+arquivo.txt
+
+
+5) Ver conteúdo sem extrair
+---------------------------
+
+Exibir conteúdo do arquivo compactado:
+zcat arquivo.txt.gz
+
+OU:
+gunzip -c arquivo.txt.gz
+
+
+6) gzip + tar (uso mais comum)
+------------------------------
+
+Criar um TAR compactado com gzip:
+tar -czf arquivos.tar.gz arquivo1.txt arquivo2.txt
+
+Onde:
+-c  cria o tar
+-z  usa gzip
+-f  nome do arquivo
+
+
+Extrair um TAR.GZ:
+tar -xzf arquivos.tar.gz
+
+
+7) Observações importantes
+--------------------------
+
+- gzip comprime UM arquivo por vez
+- Para vários arquivos → use tar + gzip
+- gunzip é equivalente a: gzip -d
+- gzip não cria pastas nem agrupa arquivos
+
+
+8) Comparação rápida
+--------------------
+
+gzip      → compacta
+gunzip    → descompacta
+zcat      → mostra conteúdo sem extrair
