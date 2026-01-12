@@ -1,0 +1,102 @@
+## Localizando arquivos no Linux ##
+
+Os comandos abaixo são usados para localizar arquivos
+ou buscar informações dentro de arquivos no Linux.
+
+--------------------------------------------------------
+locate
+--------------------------------------------------------
+- Localiza arquivos pelo NOME
+- Usa um banco de dados indexado (muito rápido)
+- Pode não mostrar arquivos criados recentemente
+
+Principais opções:
+  -i  → ignora maiúsculas e minúsculas
+  -c  → mostra apenas a quantidade de resultados
+  -n  → limita o número de resultados exibidos
+
+Exemplos:
+  locate banana.txt
+  → mostra todos os caminhos onde banana.txt aparece
+
+  locate -i banana
+  → busca por banana ignorando maiúsculas/minúsculas
+
+  locate "*.pdf"
+  → lista todos os arquivos PDF indexados
+
+  locate -c *.log
+  → mostra quantos arquivos .log existem no banco
+
+Observação:
+  Para atualizar o banco de dados:
+    sudo updatedb
+
+--------------------------------------------------------
+find
+--------------------------------------------------------
+- Procura arquivos DIRETAMENTE no sistema de arquivos
+- Mais lento que locate, porém mais preciso
+- Permite filtros por nome, tipo, tamanho, data, etc.
+
+Principais opções:
+  -name   → busca pelo nome do arquivo
+  -type   → define o tipo (f = arquivo, d = diretório)
+  -size   → filtra por tamanho
+  -mtime  → filtra por data de modificação
+  -exec   → executa um comando sobre os resultados
+
+Exemplos:
+  find . -name banana.txt
+  → procura banana.txt no diretório atual
+
+  find /home -name "*.pdf"
+  → procura PDFs em /home
+
+  find . -type d
+  → lista apenas diretórios
+
+  find . -type f -size +10M
+  → lista arquivos maiores que 10 MB
+
+  find . -name "*.log" -exec rm {} \;
+  → remove todos os arquivos .log encontrados
+
+--------------------------------------------------------
+grep
+--------------------------------------------------------
+- Procura TEXTO dentro de arquivos
+- Analisa o conteúdo, não o nome do arquivo
+- Muito usado para logs e código-fonte
+
+Principais opções:
+  -i  → ignora maiúsculas/minúsculas
+  -r  → busca recursivamente em diretórios
+  -n  → mostra o número da linha
+  -v  → inverte a busca (mostra o que NÃO contém)
+  -l  → mostra apenas o nome do arquivo
+
+Exemplos:
+  grep "erro" sistema.log
+  → mostra linhas que contêm "erro"
+
+  grep -i "linux" arquivo.txt
+  → ignora maiúsculas/minúsculas
+
+  grep -rn "TODO" .
+  → busca "TODO" em todos os arquivos, mostrando linhas
+
+  grep -v "OK" log.txt
+  → mostra linhas que não contêm "OK"
+
+  grep -l "main" *.c
+  → mostra apenas os arquivos que contêm "main"
+
+--------------------------------------------------------
+RESUMO FINAL
+--------------------------------------------------------
+locate → busca arquivos pelo nome (rápido, indexado)
+find   → busca arquivos no sistema (preciso e flexível)
+grep   → busca texto dentro de arquivos
+
+========================================================
