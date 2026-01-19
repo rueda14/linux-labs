@@ -1,0 +1,301 @@
+Estrutura e Função dos Diretórios
+
+===============================================================================
+ESTRUTURA DE DIRETÓRIOS (FORMATO ÁRVORE)
+===============================================================================
+
+```
+/
+├── bin/
+├── boot/
+├── dev/
+├── etc/
+│   ├── network/
+│   ├── NetworkManager/
+│   ├── ssh/
+│   ├── systemd/
+│   ├── passwd
+│   ├── shadow
+│   └── fstab
+├── home/
+│   └── usuario/
+│       ├── Desktop/
+│       ├── Documents/
+│       ├── Downloads/
+│       ├── Music/
+│       ├── Pictures/
+│       └── .config/
+├── lib/
+│   ├── modules/
+│   └── systemd/
+├── media/
+│   └── usuario/
+│       ├── pendrive/
+│       └── hd_externo/
+├── mnt/
+├── opt/
+│   └── app_terceiro/
+├── proc/
+│   ├── cpuinfo
+│   ├── meminfo
+│   └── [PID]/
+├── root/
+├── run/
+│   ├── systemd/
+│   └── user/
+├── sbin/
+├── srv/
+│   ├── http/
+│   ├── ftp/
+│   └── nfs/
+├── sys/
+│   ├── block/
+│   ├── bus/
+│   ├── class/
+│   └── devices/
+├── tmp/
+├── usr/
+│   ├── bin/
+│   ├── sbin/
+│   ├── lib/
+│   ├── share/
+│   └── local/
+│       ├── bin/
+│       ├── sbin/
+│       └── lib/
+└── var/
+    ├── log/
+    ├── spool/
+    ├── cache/
+    ├── lib/
+    └── tmp/
+```
+
+===============================================================================
+EXPLICAÇÃO DOS DIRETÓRIOS
+=========================
+
+/
+→ Diretório raiz do sistema
+→ Tudo no Linux parte dele
+→ Não é um “disco”, é o topo da árvore
+
+===============================================================================
+
+/bin
+→ Binários essenciais do sistema
+→ Comandos básicos disponíveis para todos
+
+Exemplos:
+
+* ls
+* cp
+* mv
+* rm
+* bash
+
+===============================================================================
+
+/sbin
+→ Binários administrativos
+→ Usados principalmente pelo root
+
+Exemplos:
+
+* mount
+* umount
+* fsck
+* reboot
+* ip
+
+===============================================================================
+
+/boot
+→ Arquivos necessários para inicialização do sistema
+
+Principais itens:
+
+* vmlinuz (kernel)
+* initramfs
+* grub/
+
+OBS: Erros aqui impedem o boot.
+
+===============================================================================
+
+/dev
+→ Dispositivos representados como arquivos
+
+Exemplos:
+
+* /dev/sda (disco)
+* /dev/tty (terminal)
+* /dev/null
+* /dev/zero
+
+===============================================================================
+
+/etc
+→ Configurações do sistema (texto puro)
+
+Principais arquivos e pastas:
+
+* passwd → usuários
+* shadow → senhas
+* fstab → montagem de discos
+* ssh/ → SSH
+* systemd/ → serviços
+* network/ → rede
+
+===============================================================================
+
+/home
+→ Diretórios pessoais dos usuários
+
+Conteúdo típico:
+
+* Documentos
+* Downloads
+* Configurações (.bashrc, .config)
+
+Exemplo:
+
+* /home/diego
+
+===============================================================================
+
+/root
+→ Diretório pessoal do usuário root
+→ Separado por segurança
+
+===============================================================================
+
+/lib
+→ Bibliotecas essenciais do sistema
+→ Dependências de /bin e /sbin
+
+Subdiretórios:
+
+* modules/ → módulos do kernel
+* systemd/
+
+===============================================================================
+
+/usr
+→ Recursos do sistema e aplicativos
+
+Subdiretórios principais:
+
+* /usr/bin → programas
+* /usr/sbin → binários administrativos
+* /usr/lib → bibliotecas
+* /usr/share → docs, ícones, manuais
+* /usr/local → software instalado manualmente
+
+===============================================================================
+
+/opt
+→ Aplicações de terceiros ou fora do gerenciador de pacotes
+
+Exemplos:
+
+* /opt/google
+* /opt/oracle
+* /opt/app_custom
+
+===============================================================================
+
+/var
+→ Dados variáveis que mudam constantemente
+
+Subdiretórios:
+
+* log/ → logs do sistema
+* cache/ → cache
+* spool/ → filas (cron, mail)
+* lib/ → dados internos de serviços
+* tmp/ → temporários persistentes
+
+===============================================================================
+
+/proc
+→ Sistema de arquivos virtual
+→ Comunicação direta com o kernel
+
+Exemplos:
+
+* cpuinfo
+* meminfo
+* [PID]/ → info de processos
+
+===============================================================================
+
+/sys
+→ Interface com hardware e kernel
+→ Muito usado para automação e tuning
+
+Subdiretórios:
+
+* devices/
+* bus/
+* class/
+* block/
+
+===============================================================================
+
+/run
+→ Dados temporários de execução
+→ Criado em tempo de boot
+
+Exemplos:
+
+* sockets
+* arquivos PID
+* status de serviços
+
+===============================================================================
+
+/tmp
+→ Arquivos temporários
+→ Pode ser apagado automaticamente
+
+OBS: Não guardar dados importantes.
+
+===============================================================================
+
+/media
+→ Montagem automática de mídias removíveis
+
+Exemplos:
+
+* pendrive
+* HD externo
+* CD/DVD
+
+===============================================================================
+
+/mnt
+→ Montagem manual/temporária de sistemas de arquivos
+
+===============================================================================
+
+/srv
+→ Dados servidos por serviços
+
+Exemplos:
+
+* http/
+* ftp/
+* nfs/
+
+===============================================================================
+RESUMO FINAL
+============
+
+✔ Estrutura padronizada (FHS)
+✔ Facilita administração, scripts e automação
+✔ Base para SysAdmin, DevOps e Infra
+✔ Essencial para troubleshooting
+✔ Conhecimento obrigatório em Linux profissional
+
+===============================================================================
