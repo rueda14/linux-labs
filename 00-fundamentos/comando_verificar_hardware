@@ -1,0 +1,224 @@
+## Verificando seu Hardware ##
+==============================================================================
+GERENCIAMENTO DE HARDWARE E KERNEL — COMANDOS ESSENCIAIS LINUX
+==============================================================================
+
+----------------------------------------------------------------------
+COMANDO: dmesg
+----------------------------------------------------------------------
+
+O QUE É:
+O comando dmesg exibe as mensagens do buffer do kernel.
+Essas mensagens são geradas desde o boot do sistema e incluem
+informações críticas sobre hardware, drivers, inicialização e erros.
+
+PARA QUE SERVE:
+- Diagnóstico de problemas de hardware
+- Verificação de drivers carregados
+- Análise de erros de boot
+- Detecção de dispositivos (USB, PCI, discos)
+- Falhas de memória, CPU, firmware e barramentos
+
+USO BÁSICO:
+dmesg
+
+USO RECOMENDADO (PRÁTICO):
+sudo dmesg | less
+→ Visualização paginada, mais segura e organizada
+
+sudo dmesg | grep -i erro
+→ Filtra mensagens relevantes
+
+FILTROS IMPORTANTES PARA USO COM GREP:
+sudo dmesg | grep -i memory
+sudo dmesg | grep -i ram
+sudo dmesg | grep -i cpu
+sudo dmesg | grep -i usb
+sudo dmesg | grep -i pci
+sudo dmesg | grep -i ata
+sudo dmesg | grep -i sata
+sudo dmesg | grep -i nvme
+sudo dmesg | grep -i eth
+sudo dmesg | grep -i wlan
+sudo dmesg | grep -i firmware
+sudo dmesg | grep -i error
+sudo dmesg | grep -i fail
+
+OPÇÕES IMPORTANTES:
+dmesg -T
+→ Converte timestamps para data/hora legível
+
+dmesg -w
+→ Monitora mensagens do kernel em tempo real
+
+----------------------------------------------------------------------
+COMANDO: lspci
+----------------------------------------------------------------------
+
+O QUE É:
+Lista todos os dispositivos conectados ao barramento PCI/PCIe.
+
+EXEMPLOS DE DISPOSITIVOS:
+- Placa de vídeo
+- Placa de rede
+- Controladores SATA / NVMe
+- Chipset da placa-mãe
+
+USO BÁSICO:
+lspci
+
+OPÇÕES MAIS IMPORTANTES:
+lspci -v
+→ Modo detalhado
+
+lspci -vv
+→ Modo muito detalhado (debug avançado)
+
+lspci -k
+→ Mostra qual driver está sendo usado pelo dispositivo
+
+lspci -nn
+→ Exibe IDs numéricos (Vendor:Device)
+
+USO COM FILTRO:
+lspci | grep -i ethernet
+lspci | grep -i vga
+lspci | grep -i audio
+lspci | grep -i network
+----------------------------------------------------------------------
+COMANDO: lsusb
+----------------------------------------------------------------------
+
+O QUE É:
+Lista todos os dispositivos conectados via barramento USB.
+
+EXEMPLOS:
+- Pendrives
+- Teclados
+- Mouses
+- Webcams
+- Adaptadores USB (rede, bluetooth, etc.)
+
+USO BÁSICO:
+lsusb
+
+OPÇÕES IMPORTANTES:
+lsusb -v
+→ Modo detalhado (verbose)
+
+lsusb -t
+→ Mostra a árvore USB (topologia dos dispositivos)
+
+USO COM FILTRO:
+lsusb | grep -i logitech
+lsusb | grep -i bluetooth
+lsusb | grep -i storage
+
+----------------------------------------------------------------------
+COMANDO: lscpu
+----------------------------------------------------------------------
+
+O QUE É:
+Exibe informações detalhadas sobre a CPU do sistema.
+
+INFORMAÇÕES MOSTRADAS:
+- Arquitetura (x86_64, arm, etc.)
+- Número de CPUs
+- Núcleos e threads
+- Frequência
+- Virtualização
+- Cache
+- Flags de instrução (sse, avx, etc.)
+
+USO BÁSICO:
+lscpu
+
+USO COM FILTRO:
+lscpu | grep MHz
+lscpu | grep Virtualization
+lscpu | grep Architecture
+
+----------------------------------------------------------------------
+COMANDO: lsmod
+----------------------------------------------------------------------
+
+O QUE SÃO MÓDULOS:
+Módulos são partes do kernel carregadas dinamicamente.
+Na prática, são drivers e extensões do kernel.
+
+EXEMPLOS DE MÓDULOS:
+- Drivers de rede
+- Drivers USB
+- Drivers de vídeo
+- Filesystems
+- Protocolos
+
+O QUE FAZ lsmod:
+Lista todos os módulos do kernel atualmente carregados.
+
+USO:
+lsmod
+
+COLUNAS EXIBIDAS:
+- Module  → nome do módulo
+- Size    → tamanho em memória
+- Used by → quem está usando o módulo
+
+USO COM FILTRO:
+lsmod | grep e100
+lsmod | grep nvidia
+lsmod | grep snd
+
+----------------------------------------------------------------------
+COMANDO: modinfo
+----------------------------------------------------------------------
+
+LOCALIZAÇÃO:
+/sbin/modinfo
+
+POR QUE FICA EM /sbin?
+Porque é um comando administrativo, diretamente ligado
+ao kernel e ao gerenciamento de módulos.
+
+O QUE FAZ:
+Exibe informações detalhadas sobre um módulo do kernel,
+mesmo que ele NÃO esteja carregado.
+
+EXEMPLO:
+modinfo e100
+
+OPÇÃO IMPORTANTE:
+modinfo -d e100
+→ Exibe a descrição do módulo
+
+INFORMAÇÕES DISPONÍVEIS:
+- Arquivo do módulo (.ko)
+- Autor
+- Licença
+- Versão
+- Parâmetros suportados
+- Dependências
+
+RELAÇÃO ENTRE COMANDOS:
+lsmod     → módulos carregados
+modinfo  → informações do módulo
+modprobe → carrega ou remove módulos
+
+----------------------------------------------------------------------
+RESUMO FINAL
+----------------------------------------------------------------------
+
+dmesg   → logs do kernel
+lspci   → dispositivos PCI
+lsusb   → dispositivos USB
+lscpu   → informações da CPU
+lsmod   → módulos do kernel carregados
+modinfo → detalhes completos de módulos
+
+Conhecimento essencial para:
+- Diagnóstico de hardware
+- Administração de sistemas
+- Infraestrutura
+- DevOps
+- Troubleshooting avançado
+----------------------------------------------------------------------
