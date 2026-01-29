@@ -1,0 +1,206 @@
+
+=====================================================================
+GERENCIAMENTO DE REPOSITÓRIOS E PACOTES NO LINUX
+RPM | APT | DPKG | YUM (GUIA COMPLETO E ORDENADO)
+=====================================================================
+
+---------------------------------------------------------------------
+1) CONCEITO DE REPOSITÓRIO
+---------------------------------------------------------------------
+- Repositório é um servidor que armazena pacotes de software.
+- Contém:
+  * programas
+  * bibliotecas
+  * dependências
+  * metadados (versão, arquitetura, assinatura)
+
+- O gerenciador de pacotes consulta os repositórios
+  para instalar, atualizar ou remover softwares.
+
+---------------------------------------------------------------------
+2) CONCEITO DE PACOTE
+---------------------------------------------------------------------
+- Pacote é um arquivo que contém:
+  * o software
+  * dependências necessárias
+  * scripts de instalação e remoção
+  * informações de versão
+
+Exemplos:
+- .deb  → Debian, Ubuntu
+- .rpm  → Red Hat, Fedora, CentOS
+
+---------------------------------------------------------------------
+3) FAMÍLIAS DE DISTRIBUIÇÕES
+---------------------------------------------------------------------
+- Debian-based:
+  * Debian
+  * Ubuntu
+  * Linux Mint
+  * Pop!_OS
+
+- Red Hat-based:
+  * RHEL
+  * Fedora
+  * CentOS
+  * Rocky Linux
+  * AlmaLinux
+
+---------------------------------------------------------------------
+4) DPKG (BAIXO NÍVEL - DEBIAN)
+---------------------------------------------------------------------
+- Ferramenta de baixo nível para manipular pacotes .deb.
+- NÃO resolve dependências automaticamente.
+
+Instalação:
+- dpkg -i pacote.deb
+
+Desinstalação:
+- dpkg -r nome_do_pacote
+
+Remoção completa (configurações):
+- dpkg -P nome_do_pacote
+
+Consulta:
+- dpkg -l                (lista pacotes)
+- dpkg -l | grep nome    (filtra pacote)
+- dpkg -s nome_do_pacote (status do pacote)
+
+---------------------------------------------------------------------
+5) APT (ALTO NÍVEL - DEBIAN)
+---------------------------------------------------------------------
+- Interface de alto nível que usa o dpkg por baixo.
+- Resolve dependências automaticamente.
+- Trabalha diretamente com repositórios.
+
+Atualizar lista de pacotes:
+- apt update
+
+Atualizar sistema:
+- apt upgrade
+
+Instalação:
+- apt install nome_do_pacote
+
+Instalação múltipla:
+- apt install pacote1 pacote2 pacote3
+
+Remoção:
+- apt remove nome_do_pacote
+
+Remoção completa (configurações):
+- apt purge nome_do_pacote
+
+Remover dependências não usadas:
+- apt autoremove
+
+Buscar pacotes:
+- apt search nome
+
+Informações do pacote:
+- apt show nome_do_pacote
+
+---------------------------------------------------------------------
+6) ARQUIVOS DE REPOSITÓRIO (APT)
+---------------------------------------------------------------------
+- /etc/apt/sources.list
+- /etc/apt/sources.list.d/*.list
+
+- Cada linha define um repositório:
+  * URL
+  * distribuição
+  * componente (main, contrib, non-free)
+
+Exemplo:
+- deb http://deb.debian.org/debian bookworm main
+
+---------------------------------------------------------------------
+7) YUM (ALTO NÍVEL - RED HAT)
+---------------------------------------------------------------------
+- Gerenciador de pacotes para sistemas RPM antigos.
+- Resolve dependências automaticamente.
+- Trabalha com repositórios.
+
+Instalação:
+- yum install nome_do_pacote
+
+Remoção:
+- yum remove nome_do_pacote
+
+Atualização:
+- yum update
+
+Busca:
+- yum search nome
+
+Informações:
+- yum info nome_do_pacote
+
+---------------------------------------------------------------------
+8) DNF (SUBSTITUTO DO YUM)
+---------------------------------------------------------------------
+- Gerenciador moderno que substitui o yum.
+- Mais rápido e eficiente.
+- Sintaxe semelhante.
+
+Exemplo:
+- dnf install nome_do_pacote
+- dnf remove nome_do_pacote
+- dnf update
+
+---------------------------------------------------------------------
+9) RPM (BAIXO NÍVEL - RED HAT)
+---------------------------------------------------------------------
+- Ferramenta de baixo nível para pacotes .rpm.
+- NÃO resolve dependências automaticamente.
+
+Instalação:
+- rpm -i pacote.rpm
+
+Atualização:
+- rpm -U pacote.rpm
+
+Remoção:
+- rpm -e nome_do_pacote
+
+Consulta:
+- rpm -qa               (lista pacotes)
+- rpm -qi nome          (info)
+- rpm -ql nome          (arquivos instalados)
+
+---------------------------------------------------------------------
+10) ARQUIVOS DE REPOSITÓRIO (YUM/DNF)
+---------------------------------------------------------------------
+- /etc/yum.repos.d/*.repo
+
+Exemplo de arquivo .repo:
+- [baseos]
+- name=BaseOS
+- baseurl=http://mirror...
+- enabled=1
+- gpgcheck=1
+
+---------------------------------------------------------------------
+11) COMPARAÇÃO RÁPIDA
+---------------------------------------------------------------------
+- dpkg  → baixo nível (.deb)
+- apt   → alto nível (usa dpkg)
+- rpm   → baixo nível (.rpm)
+- yum   → alto nível (usa rpm)
+- dnf   → yum moderno
+
+---------------------------------------------------------------------
+12) BOAS PRÁTICAS
+---------------------------------------------------------------------
+- Prefira sempre gerenciadores de alto nível (apt, dnf).
+- Use dpkg e rpm apenas quando necessário.
+- Sempre atualize a lista de pacotes antes de instalar.
+- Evite baixar pacotes de fontes desconhecidas.
+
+---------------------------------------------------------------------
+DICA FINAL
+---------------------------------------------------------------------
+- Repositórios garantem:
+  * segurança
+  * atualizações automáticas
+  * gerenciamento correto de dependências
