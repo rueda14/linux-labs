@@ -1,0 +1,94 @@
+## Compilando um Programa ##
+
+============================================================
+COMPILAÇÃO DE PROGRAMAS NO LINUX (EXEMPLO: NMAP)
+============================================================
+
+INTRODUÇÃO
+------------------------------------------------------------
+No Linux, muitos softwares são distribuídos em código-fonte.
+Compilar um programa significa transformar esse código em um
+executável que o sistema consegue rodar.
+
+O Nmap é um exemplo clássico de projeto open source que segue
+o fluxo tradicional de compilação: ./configure → make → make install.
+
+------------------------------------------------------------
+ETAPA 1 — ./configure
+------------------------------------------------------------
+Objetivo:
+- Preparar o sistema para a compilação.
+
+O script ./configure:
+- Verifica o sistema operacional
+- Detecta arquitetura (32/64 bits)
+- Procura bibliotecas já instaladas (libpcap, zlib, pcre, etc)
+- Define caminhos de instalação (/usr/local por padrão)
+- Gera os arquivos Makefile
+
+Exemplo com o Nmap:
+./configure
+
+Resultado:
+- Se faltar alguma dependência, o processo para aqui
+- Se tudo estiver correto, o projeto fica "pronto para compilar"
+
+------------------------------------------------------------
+ETAPA 2 — make
+------------------------------------------------------------
+Objetivo:
+- Compilar o código-fonte.
+
+O comando make:
+- Lê os arquivos Makefile gerados pelo ./configure
+- Compila cada arquivo .c / .cpp em arquivos objeto (.o)
+- Linka os objetos com bibliotecas
+- Gera o binário final (ex: nmap)
+
+Exemplo com o Nmap:
+make
+
+O que acontece por baixo dos panos:
+- gcc/g++ são chamados automaticamente
+- Bibliotecas internas do projeto são compiladas primeiro
+- Só o que mudou é recompilado (otimização)
+
+Resultado:
+- O binário "nmap" é criado na pasta do projeto
+- Nada é instalado no sistema ainda
+
+------------------------------------------------------------
+ETAPA 3 — make install
+------------------------------------------------------------
+Objetivo:
+- Instalar o programa no sistema.
+
+O make install:
+- Copia o binário para /usr/local/bin
+- Copia man pages para /usr/local/share/man
+- Copia scripts e dados auxiliares
+- Ajusta permissões dos arquivos
+
+Exemplo com o Nmap:
+sudo make install
+
+Observação importante:
+- Essa etapa exige privilégios administrativos (sudo)
+- Sem permissão, o processo falha ao escrever em /usr/local
+
+Resultado:
+- O comando "nmap" passa a funcionar de qualquer diretório
+- A documentação fica acessível via: man nmap
+
+------------------------------------------------------------
+RESUMO FINAL
+------------------------------------------------------------
+./configure   → prepara o ambiente e gera os Makefiles
+make          → compila o código e gera o executável
+make install  → instala o programa no sistema
+
+Esse fluxo é um dos pilares do ecossistema Linux e entender
+essas etapas ajuda muito a diagnosticar erros, dependências
+faltando e problemas de permissão.
+
+============================================================
