@@ -1,0 +1,314 @@
+
+============================================================
+GERENCIAMENTO DE PERMISSÕES NO LINUX
+(letras, números e controle de acesso)
+============================================================
+
+CONCEITO GERAL
+No Linux, tudo é arquivo: arquivos comuns, diretórios e dispositivos.
+Cada arquivo possui permissões que controlam:
+
+- quem pode ler
+- quem pode escrever
+- quem pode executar
+
+Essas permissões são divididas em 3 grupos:
+
+u = user (dono)
+g = group (grupo)
+o = others (outros)
+
+E 3 tipos de permissão:
+
+r = read    (leitura)
+w = write   (escrita)
+x = execute (execução)
+
+============================================================
+1. VISUALIZAR PERMISSÕES
+============================================================
+
+ls -l
+Mostra permissões, dono e grupo.
+
+Exemplo:
+$ ls -l
+-rwxr-xr-- 1 rueda dev 4096 Feb 11 script.sh
+
+Quebra da linha:
+-         -> tipo de arquivo
+rwx       -> permissões do dono
+r-x       -> permissões do grupo
+r--       -> permissões dos outros
+
+============================================================
+2. TIPOS DE ARQUIVO (1º caractere)
+============================================================
+
+-  arquivo comum
+d  diretório
+l  link simbólico
+c  dispositivo
+b  bloco
+
+Exemplo:
+drwxr-xr-x pasta/
+
+============================================================
+3. TABELA DE PERMISSÕES (LETRAS)
+============================================================
+
+r = 4
+w = 2
+x = 1
+
+Combinações:
+
+rwx = 7
+rw- = 6
+r-x = 5
+r-- = 4
+-wx = 3
+-w- = 2
+--x = 1
+--- = 0
+
+============================================================
+4. REPRESENTAÇÃO NUMÉRICA
+============================================================
+
+Formato:
+chmod XYZ arquivo
+
+X = dono
+Y = grupo
+Z = outros
+
+Exemplo:
+chmod 755 script.sh
+
+Tabela comum:
+777 = tudo liberado
+755 = dono tudo, outros leitura/exec
+700 = só dono
+644 = dono escreve, outros leem
+
+============================================================
+5. ALTERAR PERMISSÕES (chmod)
+============================================================
+
+MODO NUMÉRICO
+
+chmod 755 arquivo
+
+Exemplo:
+$ chmod 755 script.sh
+$ ls -l script.sh
+-rwxr-xr-x 1 rueda rueda 120 script.sh
+
+------------------------------------------------------------
+
+MODO SIMBÓLICO
+
+u = user
+g = group
+o = others
+a = all
+
++ adiciona
+- remove
+= define
+
+Exemplos:
+
+Adicionar execução ao dono:
+chmod u+x script.sh
+
+Remover escrita de outros:
+chmod o-w arquivo.txt
+
+Definir tudo:
+chmod u=rwx,g=rx,o=r arquivo
+
+Múltiplas:
+chmod u+x,g-w,o-r arquivo
+
+============================================================
+6. PERMISSÕES EM DIRETÓRIOS
+============================================================
+
+Diretórios funcionam diferente:
+
+r -> listar conteúdo
+w -> criar/remover arquivos
+x -> entrar no diretório
+
+Exemplo:
+chmod 755 pasta/
+
+Sem x:
+não entra no diretório.
+
+============================================================
+7. ALTERAR DONO E GRUPO
+============================================================
+
+chown
+Muda dono.
+
+Sintaxe:
+sudo chown usuario arquivo
+
+Exemplo:
+sudo chown diego arquivo.txt
+
+Mudar dono e grupo:
+sudo chown diego:dev arquivo.txt
+
+Recursivo:
+sudo chown -R diego:dev pasta/
+
+------------------------------------------------------------
+
+chgrp
+Muda apenas grupo.
+
+sudo chgrp dev arquivo.txt
+
+============================================================
+8. PERMISSÕES RECURSIVAS
+============================================================
+
+chmod -R 755 pasta/
+
+Aplica em tudo dentro.
+
+Cuidado:
+pode quebrar sistema se usado em /etc ou /bin
+
+============================================================
+9. UMASK (PERMISSÃO PADRÃO)
+============================================================
+
+Define permissão ao criar arquivos novos.
+
+Ver:
+umask
+
+Saída comum:
+0022
+
+Significa:
+arquivos novos -> 644
+pastas novas  -> 755
+
+Alterar temporariamente:
+umask 027
+
+============================================================
+10. PERMISSÕES ESPECIAIS
+============================================================
+
+SETUID (4)
+Executa com permissão do dono.
+
+chmod 4755 programa
+
+Exemplo:
+-rwsr-xr-x
+
+------------------------------------------------------------
+
+SETGID (2)
+Executa com grupo do dono.
+
+chmod 2755 pasta
+
+------------------------------------------------------------
+
+STICKY BIT (1)
+Só o dono pode apagar.
+
+Usado em /tmp
+
+chmod 1777 pasta
+
+Exemplo:
+drwxrwxrwt
+
+============================================================
+11. EXEMPLOS PRÁTICOS
+============================================================
+
+Criar script executável:
+chmod +x backup.sh
+
+Pasta só para usuário:
+chmod 700 privado/
+
+Servidor web:
+chmod 755 /var/www
+chmod 644 arquivos.html
+
+Compartilhamento em grupo:
+chmod 770 projeto/
+chown :dev projeto/
+
+============================================================
+12. POSSÍVEIS PROBLEMAS
+============================================================
+
+Permissão negada:
+Permission denied
+
+Solução:
+ls -l
+verificar dono e permissões
+
+Executar script:
+./script.sh
+se não rodar:
+chmod +x script.sh
+
+============================================================
+13. RESUMO RÁPIDO
+============================================================
+
+Ver permissões:
+ls -l
+
+Alterar:
+chmod 755 arquivo
+
+Mudar dono:
+chown usuario arquivo
+
+Mudar grupo:
+chgrp grupo arquivo
+
+Recursivo:
+chmod -R 755 pasta
+
+============================================================
+TABELA FINAL DE REFERÊNCIA
+============================================================
+
+Número | Permissão
+------------------
+0 | ---
+1 | --x
+2 | -w-
+3 | -wx
+4 | r--
+5 | r-x
+6 | rw-
+7 | rwx
+
+Exemplo:
+chmod 640 arquivo
+dono: rw-
+grupo: r--
+outros: ---
+
+============================================================
+
