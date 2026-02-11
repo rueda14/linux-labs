@@ -1,0 +1,274 @@
+```
+============================================================
+GERENCIAMENTO DE USUÁRIOS NO LINUX (VIA TERMINAL)
+============================================================
+
+CONCEITO GERAL
+O Linux é um sistema multiusuário. Isso significa que várias contas
+podem existir ao mesmo tempo, cada uma com permissões, senhas e
+configurações próprias.
+
+A administração de usuários envolve:
+- criar contas
+- remover contas
+- alterar senhas
+- gerenciar grupos
+- controlar permissões e privilégios (sudo)
+- consultar informações
+
+Arquivos importantes:
+- /etc/passwd   -> lista de usuários
+- /etc/shadow   -> senhas criptografadas
+- /etc/group    -> grupos do sistema
+- /home/usuario -> diretório pessoal
+
+Comandos geralmente exigem:
+sudo (privilégios administrativos)
+
+============================================================
+1. CONSULTAR USUÁRIO ATUAL
+============================================================
+
+whoami
+Mostra o usuário logado.
+
+Exemplo:
+$ whoami
+rueda
+
+id
+Mostra UID, GID e grupos.
+
+$ id
+uid=1000(rueda) gid=1000(rueda) groups=1000(rueda),27(sudo),24(cdrom)
+
+============================================================
+2. LISTAR USUÁRIOS DO SISTEMA
+============================================================
+
+cat /etc/passwd
+Mostra todos os usuários.
+
+Formato de cada linha:
+usuario:x:UID:GID:comentario:home:shell
+
+Exemplo:
+rueda:x:1000:1000:Diego:/home/rueda:/bin/bash
+
+Filtrar apenas usuários "humanos":
+awk -F: '$3 >= 1000 {print $1}' /etc/passwd
+
+============================================================
+3. CRIAR USUÁRIO
+============================================================
+
+useradd
+Cria usuário, mas não cria senha automaticamente.
+
+Sintaxe:
+sudo useradd [opções] nome
+
+Opções comuns:
+-m   cria diretório home
+-s   define shell
+-c   comentário (nome real)
+-d   define home manual
+
+Exemplo:
+sudo useradd -m -s /bin/bash -c "Diego Rueda" diego
+
+Definir senha:
+sudo passwd diego
+
+Saída:
+New password:
+Retype new password:
+passwd: password updated successfully
+
+============================================================
+4. CRIAR USUÁRIO INTERATIVO (RECOMENDADO)
+============================================================
+
+adduser (mais amigável)
+
+sudo adduser diego
+
+Ele pede:
+- senha
+- nome completo
+- informações opcionais
+
+Saída:
+Adding user `diego' ...
+Creating home directory `/home/diego' ...
+
+============================================================
+5. ALTERAR SENHA
+============================================================
+
+sudo passwd usuario
+
+Exemplo:
+sudo passwd diego
+
+Bloquear usuário:
+sudo passwd -l diego
+
+Desbloquear:
+sudo passwd -u diego
+
+Forçar troca de senha no login:
+sudo passwd -e diego
+
+============================================================
+6. REMOVER USUÁRIO
+============================================================
+
+Remover usuário:
+sudo userdel diego
+
+Remover com diretório home:
+sudo userdel -r diego
+
+============================================================
+7. MODIFICAR USUÁRIO
+============================================================
+
+usermod
+
+Sintaxe:
+sudo usermod [opções] usuario
+
+Opções úteis:
+-l novo_nome    renomeia usuário
+-d nova_home    muda home
+-m              move arquivos da home
+-s shell        altera shell
+-aG grupo       adiciona ao grupo
+
+Exemplo:
+Adicionar ao sudo:
+sudo usermod -aG sudo diego
+
+Mudar shell:
+sudo usermod -s /bin/zsh diego
+
+============================================================
+8. GERENCIAR GRUPOS
+============================================================
+
+Criar grupo:
+sudo groupadd devops
+
+Adicionar usuário ao grupo:
+sudo usermod -aG devops diego
+
+Ver grupos do usuário:
+groups diego
+
+Saída:
+diego : diego sudo devops
+
+Remover do grupo:
+sudo gpasswd -d diego devops
+
+============================================================
+9. VER SESSÕES ATIVAS
+============================================================
+
+who
+Mostra usuários logados.
+
+$ who
+rueda  tty2  2026-02-11 20:10
+
+w
+Mostra o que cada usuário está fazendo.
+
+============================================================
+10. MUDAR DE USUÁRIO
+============================================================
+
+su usuario
+Troca de usuário.
+
+su - usuario
+Carrega ambiente completo.
+
+Exemplo:
+su - diego
+
+sudo -i
+Entra como root.
+
+============================================================
+11. PERMISSÕES E PRIVILÉGIOS
+============================================================
+
+Adicionar ao grupo sudo:
+sudo usermod -aG sudo diego
+
+Testar:
+su - diego
+sudo apt update
+
+============================================================
+12. INFORMAÇÕES DETALHADAS
+============================================================
+
+finger usuario (se instalado)
+Mostra detalhes do usuário.
+
+getent passwd usuario
+Consulta banco de usuários.
+
+Exemplo:
+getent passwd diego
+
+Saída:
+diego:x:1001:1001:Diego:/home/diego:/bin/bash
+
+============================================================
+13. SHELL PADRÃO
+============================================================
+
+Ver shells disponíveis:
+cat /etc/shells
+
+Alterar shell:
+chsh -s /bin/zsh diego
+
+============================================================
+14. BOAS PRÁTICAS
+============================================================
+
+- nunca trabalhar como root direto
+- usar sudo
+- remover usuários antigos
+- revisar grupos periodicamente
+- forçar senha forte
+- usar bloqueio de conta quando necessário
+
+============================================================
+RESUMO DO FLUXO COMUM
+============================================================
+
+Criar usuário:
+sudo adduser nome
+
+Adicionar ao sudo:
+sudo usermod -aG sudo nome
+
+Alterar senha:
+sudo passwd nome
+
+Remover:
+sudo userdel -r nome
+
+Consultar:
+id nome
+groups nome
+
+============================================================
+
+```
